@@ -6,21 +6,21 @@ const cached = new Map();
 
 type Optional<T> = T | undefined;
 
-type WithMeta<T> = T & { meta?: any }
+type WithMeta<T> = T & { meta?: any };
 
 type KeyValue<T> = {
-  key: string
-  value: WithMeta<T>
-}
+  key: string;
+  value: WithMeta<T>;
+};
 
 type GetResponse<T> = Optional<
-    | {
-  items: KeyValue<T>[]
-  lastKey?: string
-  next?: () => Promise<GetResponse<T>>
-}
-    | T
-    >
+  | {
+      items: KeyValue<T>[];
+      lastKey?: string;
+      next?: () => Promise<GetResponse<T>>;
+    }
+  | T
+>;
 type Event = {
   uid: number;
   ts: number;
@@ -32,15 +32,17 @@ type Event = {
     screen: string;
     element: string;
     label: string;
-    interaction: string
+    interaction: string;
   }>;
   session: number;
-}
+};
 
 // Create GET route and return users
-api.get('/events/:gameId/:start/:limit', async (req, res) => {
+api.get('/events/:start/:limit', async (req, res) => {
   // Get users from Serverless Data
-  const {items, lastKey, next} = await data.get([`events:>${params.start}`], {limit: req.params.limit});
+  const {items, lastKey, next} = await data.get(`events:>${params.start}`, {
+    limit: parseInt(req.params.limit),
+  });
   const id = uuidv4();
   cached.set(id, {lastKey, next});
   // Return the results
@@ -53,7 +55,10 @@ api.get('/events/:gameId/:start/:limit', async (req, res) => {
 api.get('/next/:id', async (req, res) => {
   // Get users from Serverless Data
   try {
-    const cachedResult: {lastKey: string, next: () => Promise<GetResponse<{items, lastKey, next}>>} = cached.get(req.id);
+    const cachedResult: {
+      lastKey: string;
+      next: () => Promise<GetResponse<{ items; lastKey; next }>>;
+    } = cached.get(req.id);
     const {items, lastKey, next} = await cachedResult.next();
     const id = uuidv4();
     cached.set(id, {lastKey, next});
@@ -68,7 +73,6 @@ api.get('/next/:id', async (req, res) => {
   }
 });
 
-
 api.post('/events', async (req, res) => {
   const event: Event = req.body.event;
   await data.set(`events:${event.ts}`, event);
@@ -77,5 +81,5 @@ api.post('/events', async (req, res) => {
 
 // Redirect to users endpoint
 api.get('/*', (req, res) => {
-  res.redirect('/users');
+  res.redirect('/events');
 });
