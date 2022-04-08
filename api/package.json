@@ -1,0 +1,26 @@
+{
+  "name": "ts-api",
+  "version": "1.0.0",
+  "description": "Serverless Cloud TypeScript API template",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "cloud",
+    "test": "cloud test"
+  },
+  "devDependencies": {
+    "@serverless/cloud": "^2.0.0",
+    "@types/jest": "^26.0.24",
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
+    "eslint": "^8.12.0",
+    "eslint-config-google": "^0.14.0"
+  },
+  "serverless": {
+    "app": "telemtry-api",
+    "org": "codestrap"
+  },
+  "dependencies": {
+    "uuid": "^8.3.2"
+  }
+}

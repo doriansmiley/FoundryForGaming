@@ -1,0 +1,81 @@
+import {api, data, params} from '@serverless/cloud';
+
+import {v4 as uuidv4} from 'uuid';
+
+const cached = new Map();
+
+type Optional<T> = T | undefined;
+
+type WithMeta<T> = T & { meta?: any }
+
+type KeyValue<T> = {
+  key: string
+  value: WithMeta<T>
+}
+
+type GetResponse<T> = Optional<
+    | {
+  items: KeyValue<T>[]
+  lastKey?: string
+  next?: () => Promise<GetResponse<T>>
+}
+    | T
+    >
+type Event = {
+  uid: number;
+  ts: number;
+  sessionId: number;
+  deviceID: number;
+  platform: string;
+  version: string;
+  evtAttributes: Array<{
+    screen: string;
+    element: string;
+    label: string;
+    interaction: string
+  }>;
+  session: number;
+}
+
+// Create GET route and return users
+api.get('/events/:gameId/:start/:limit', async (req, res) => {
+  // Get users from Serverless Data
+  const {items, lastKey, next} = await data.get([`events:>${params.start}`], {limit: req.params.limit});
+  const id = uuidv4();
+  cached.set(id, {lastKey, next});
+  // Return the results
+  res.send({
+    items,
+    id,
+  });
+});
+
+api.get('/next/:id', async (req, res) => {
+  // Get users from Serverless Data
+  try {
+    const cachedResult: {lastKey: string, next: () => Promise<GetResponse<{items, lastKey, next}>>} = cached.get(req.id);
+    const {items, lastKey, next} = await cachedResult.next();
+    const id = uuidv4();
+    cached.set(id, {lastKey, next});
+    // Return the results
+    res.send({
+      items,
+      id,
+    });
+  } catch (e) {
+    // TODO: not found
+    res.status(400).send('Bad Request');
+  }
+});
+
+
+api.post('/events', async (req, res) => {
+  const event: Event = req.body.event;
+  await data.set(`events:${event.ts}`, event);
+  res.send('Event added');
+});
+
+// Redirect to users endpoint
+api.get('/*', (req, res) => {
+  res.redirect('/users');
+});
