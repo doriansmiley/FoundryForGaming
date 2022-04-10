@@ -22,7 +22,7 @@ type GetResponse<T> = Optional<
   | T
 >;
 type Event = {
-  uid: number;
+  uid: string;
   ts: number;
   sessionId: number;
   deviceID: number;
@@ -40,9 +40,10 @@ type Event = {
 // Create GET route and return users
 api.get('/events/:start/:limit', async (req, res) => {
   // Get users from Serverless Data
-  const {items, lastKey, next} = await data.get(`events:>${params.start}`, {
-    limit: parseInt(req.params.limit),
-  });
+  const {items, lastKey, next} = await data.get(`events:>=${req.params.start}`,
+      {
+        limit: parseInt(req.params.limit),
+      });
   const id = uuidv4();
   cached.set(id, {lastKey, next});
   // Return the results
@@ -58,9 +59,11 @@ api.get('/next/:id', async (req, res) => {
     const cachedResult: {
       lastKey: string;
       next: () => Promise<GetResponse<{ items; lastKey; next }>>;
-    } = cached.get(req.id);
+    } = cached.get(req.params.id);
     const {items, lastKey, next} = await cachedResult.next();
     const id = uuidv4();
+    // prevent overflow by removing cached keys once retrieved
+    cached.delete(req.params.id);
     cached.set(id, {lastKey, next});
     // Return the results
     res.send({
@@ -74,8 +77,12 @@ api.get('/next/:id', async (req, res) => {
 });
 
 api.post('/events', async (req, res) => {
-  const event: Event = req.body.event;
-  await data.set(`events:${event.ts}`, event);
+  const events: Array<Event> = req.body.events;
+  const promises = [];
+  events.forEach((event) => {
+    promises.push(data.set(`events:${event.ts}`, event));
+  });
+  await Promise.all(promises);
   res.send('Event added');
 });
 
