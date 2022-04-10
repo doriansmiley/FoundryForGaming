@@ -1,4 +1,4 @@
-import {api, data, params} from '@serverless/cloud';
+import {api, data} from '@serverless/cloud';
 
 import {v4 as uuidv4} from 'uuid';
 
@@ -24,8 +24,8 @@ type GetResponse<T> = Optional<
 type Event = {
   uid: string;
   ts: number;
-  sessionId: number;
-  deviceID: number;
+  sessionId: string;
+  deviceID: string;
   platform: string;
   version: string;
   evtAttributes: Array<{
