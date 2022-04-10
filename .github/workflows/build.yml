@@ -1,9 +1,12 @@
 name: Deploy
 on:
   push:
-    branches:
-      - main
-
+    tags:
+      - '*'
+defaults:
+  run:
+    shell: bash
+    working-directory: api
 jobs:
   deploy:
     name: Deploy
