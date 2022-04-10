@@ -16,5 +16,6 @@ jobs:
         with:
           node-version: 16
       - run: cd api
+      - run: ls
       - run: npm ci
       - run: npx cloud test
