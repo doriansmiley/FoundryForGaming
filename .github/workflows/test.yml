@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 16
-      - run: cd api
+      - run: cd ./api
       - run: ls
       - run: npm ci
       - run: npx cloud test
