@@ -1,12 +1,15 @@
-name: Deploy
+name: Test
 on:
-  push:
+  pull_request:
     branches:
-      - main
-
+      - master
+defaults:
+  run:
+    shell: bash
+    working-directory: api
 jobs:
-  deploy:
-    name: Deploy
+  test:
+    name: Test
     runs-on: ubuntu-latest
     env:
       SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
@@ -15,6 +18,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 16
+      - run: ls
       - run: npm ci
       - run: npx cloud test
-      - run: npx cloud deploy prod
