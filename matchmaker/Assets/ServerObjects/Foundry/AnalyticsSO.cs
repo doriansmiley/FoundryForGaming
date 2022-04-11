@@ -103,7 +103,11 @@ namespace ServerObjects
                     continue;
                 result.Add(field.Name, field.GetValue(message));
             }
-            result["label"] = message.GetType().Name;
+            result["action"] = message.GetType().Name;
+            result["element"] = message.Button;
+            result["label"] = message.Label;
+            result["interaction"] = message.Interaction;
+
             return result;
         }
 

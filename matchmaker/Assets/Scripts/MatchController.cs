@@ -3,6 +3,7 @@ using ServerObjects;
 using GPF.ServerObjects;
 using GPF;
 using GPF.UI.AutoComplete;
+using UnityEngine.EventSystems;
 
 public class MatchController : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class MatchController : MonoBehaviour
         
     public void StartMatchMaking()
     {
+        var Button = EventSystem.current;
         syncer.Send(matchPlayer.ID, new MatchPlayerSO.Match());
     }
 

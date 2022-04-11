@@ -21,6 +21,30 @@ namespace ServerObjects
 #endif
             ;
 
+        public string Button =
+#if UNITY_2017_1_OR_NEWER
+            UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name
+#else
+            ""
+#endif
+            ;
+
+        public string Label =
+#if UNITY_2017_1_OR_NEWER
+            UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponentInChildren<UnityEngine.UI.Text>().text
+#else
+            ""
+#endif
+            ;
+
+        public string Interaction =
+#if UNITY_2017_1_OR_NEWER
+            UnityEngine.EventSystems.EventSystem.current.currentInputModule.input.touchCount > 0 ? "touch" : "click"
+#else
+            ""
+#endif
+            ;
+
         public DateTime timestamp { get; set; }
     }
 }
