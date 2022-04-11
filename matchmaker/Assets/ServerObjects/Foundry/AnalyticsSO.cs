@@ -22,7 +22,7 @@ namespace ServerObjects
             public string deviceID;
             public string platform;
             public string version = SchemaVersion;
-            public List<Dictionary<string, object>> evtAttributes = new List<Dictionary<string, object>>();
+            public Dictionary<string, object> evtAttributes = new Dictionary<string, object>();
         }
 
         public int CurrentSession;
@@ -45,7 +45,7 @@ namespace ServerObjects
         async Task SendAnalytics(AnalyticsMessage message, Dictionary<string, object> state, string sessionId)
         {
             var uid = $"{PublicID}-{UpdateOrder}";
-            var eventVariables = GetMessageFields(message);
+            var evtAttributes = GetMessageFields(message);
             var e = new Event
             {
                 uid = uid,
@@ -56,10 +56,10 @@ namespace ServerObjects
             };
             foreach (var kvp in state)
             {
-                if (!eventVariables.ContainsKey(kvp.Key))
-                    eventVariables[kvp.Key] = kvp.Value;
+                if (!evtAttributes.ContainsKey(kvp.Key))
+                    evtAttributes[kvp.Key] = kvp.Value;
             }
-            e.evtAttributes.Add(eventVariables);
+            e.evtAttributes = evtAttributes;
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(e);
 
             if (URL == "TBD")
