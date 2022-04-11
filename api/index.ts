@@ -28,12 +28,12 @@ type Event = {
   deviceID: string;
   platform: string;
   version: string;
-  evtAttributes: Array<{
+  evtAttributes: {
     screen: string;
     element: string;
     label: string;
     interaction: string;
-  }>;
+  };
   session: number;
 };
 
