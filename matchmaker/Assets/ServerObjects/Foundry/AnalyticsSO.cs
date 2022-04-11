@@ -104,7 +104,7 @@ namespace ServerObjects
                 result.Add(field.Name, field.GetValue(message));
             }
             result["action"] = message.GetType().Name;
-            result["element"] = message.Button;
+            result["element"] = message.Element;
             result["label"] = message.Label;
             result["interaction"] = message.Interaction;
 
