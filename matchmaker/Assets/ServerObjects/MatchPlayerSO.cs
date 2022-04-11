@@ -187,7 +187,7 @@ namespace ServerObjects
         protected override Dictionary<string, object> GetAnalyticsState()
         {
             return new Dictionary<string, object> {
-                ["state"] = state.ToString(),
+                ["screen"] = state.ToString(),
             };
         }
     }
