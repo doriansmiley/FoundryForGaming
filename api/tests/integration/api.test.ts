@@ -9,12 +9,12 @@ beforeAll(async () => {
     deviceID: 1648758830,
     platform: 'iOS',
     version: '0.0.01',
-    evtAttributes: [{
+    evtAttributes: {
       screen: 'screenA',
       element: 'ButtonA',
       label: 'ButtonText',
       interaction: 'touch',
-    }],
+    },
     session: 'test',
   });
 });
@@ -37,12 +37,12 @@ test('should create events', async () => {
             deviceID: 1648758830,
             platform: 'iOS',
             version: '0.0.01',
-            evtAttributes: [{
+            evtAttributes: {
               screen: 'screenA',
               element: 'ButtonA',
               label: 'ButtonText',
               interaction: 'touch',
-            }],
+            },
             session: 'test',
           },
           {
@@ -52,12 +52,12 @@ test('should create events', async () => {
             deviceID: 1648758830,
             platform: 'iOS',
             version: '0.0.01',
-            evtAttributes: [{
+            evtAttributes: {
               screen: 'screenA',
               element: 'ButtonA',
               label: 'ButtonText',
               interaction: 'touch',
-            }],
+            },
             session: 'test',
           },
           {
@@ -67,12 +67,12 @@ test('should create events', async () => {
             deviceID: 1648758830,
             platform: 'iOS',
             version: '0.0.01',
-            evtAttributes: [{
+            evtAttributes: {
               screen: 'screenA',
               element: 'ButtonA',
               label: 'ButtonText',
               interaction: 'touch',
-            }],
+            },
             session: 'test',
           },
           {
@@ -82,12 +82,12 @@ test('should create events', async () => {
             deviceID: 1648758830,
             platform: 'iOS',
             version: '0.0.01',
-            evtAttributes: [{
+            evtAttributes: {
               screen: 'screenA',
               element: 'ButtonA',
               label: 'ButtonText',
               interaction: 'touch',
-            }],
+            },
             session: 'test',
           },
         ],
