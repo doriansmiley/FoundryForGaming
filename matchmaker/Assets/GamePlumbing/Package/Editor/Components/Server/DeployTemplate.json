@@ -1,0 +1,939 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Game Plumbing Framework backend for high performance reactive multiplayer and persistence",
+    "Parameters": {
+        "VpcCIDR": {
+            "Type": "String",
+            "Description": "Select a VPC that allows instances to access the Internet",
+            "Default": "10.0.0.0/16"
+        },
+        "CryptoKey1": {
+            "NoEcho": true,
+            "Type": "String",
+            "Description": "(Required) The first Key used internally by encryption algorythms that encrypt IDs. 10-32 Characters.",
+            "Default": "key1234567890",
+            "MinLength": 10,
+            "MaxLength": 32,
+            "AllowedPattern": "^[A-Za-z_0-9]+$"
+        },
+        "CryptoKey2": {
+            "NoEcho": true,
+            "Type": "String",
+            "Description": "(Required) The second Key used internally by encryption algorythms that encrypt IDs. 5-16 Characters.",
+            "Default": "key12345",
+            "MinLength": 5,
+            "MaxLength": 16,
+            "AllowedPattern": "^[A-Za-z_0-9]+$"
+        }
+    },
+    "Mappings": {
+        "Main": {
+            "CPU": {
+                "Value": "%CPU%"
+            },
+            "Memory": {
+                "Value": "%MEMORY%"
+            },
+            "DockerImage": {
+                "Value": "public.ecr.aws/a9v5u2b1/gpf-server-base:2504"
+            },
+            "Domain": {
+                "Value": "%DOMAIN%"
+            },
+            "HostedZoneId": {
+                "Value": "%HOSTED_ZONE_ID%"
+            },
+            "Cert": {
+                "Value": "%CERT%"
+            },
+            "UseDNS": {
+                "Value": "%USE_DNS%"
+            },
+            "Subdomain": {
+                "Value": "%SUBDOMAIN%"
+            },
+            "UseEncryption": {
+                "Value": "%USE_ENCRYPTION%"
+            },
+            "AuthServerConfigs": {
+                "Value": "%AUTH_SERVER_CONFIGS%"
+            },
+            "Versions": {
+                "Value": "%VERSIONS%"
+            },
+            "SoEnv": {
+                "Value": "%SO_ENV%"
+            },
+            "ClearStorageOnDeploy": {
+                "Value": "%CLEAR_STORAGE_ON_DEPLOY%"
+            },
+            "SendExceptionsToClient": {
+                "Value": "%SEND_EXCEPTIONS_TO_CLIENT%"
+            }
+        }
+    },
+    "Conditions": {
+        "UseLoadBalancer": {
+            "Fn::Equals": [
+                {
+                    "Fn::FindInMap": [
+                        "Main",
+                        "UseDNS",
+                        "Value"
+                    ]
+                },
+                "True"
+            ]
+        }
+    },
+    "Resources": {
+        "ManagementBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "AccessControl": "Private"
+            },
+            "DeletionPolicy": "Delete"
+        },
+        "StorageBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "AccessControl": "Private",
+                "CorsConfiguration": {
+                    "CorsRules": [
+                        {
+                            "AllowedHeaders": [
+                                "*"
+                            ],
+                            "AllowedMethods": [
+                                "GET"
+                            ],
+                            "AllowedOrigins": [
+                                "*"
+                            ],
+                            "ExposedHeaders": [
+                                "ETag"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "DeletionPolicy": "Delete"
+        },
+        "Vpc": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": {
+                    "Ref": "VpcCIDR"
+                },
+                "EnableDnsSupport": "true",
+                "EnableDnsHostnames": "true"
+            }
+        },
+        "IPv6CidrBlock": {
+            "Type": "AWS::EC2::VPCCidrBlock",
+            "DependsOn": "Vpc",
+            "Properties": {
+                "AmazonProvidedIpv6CidrBlock": true,
+                "VpcId": {
+                    "Ref": "Vpc"
+                }
+            }
+        },
+        "InternetGateway": {
+            "Type": "AWS::EC2::InternetGateway"
+        },
+        "IG2VPC": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "InternetGatewayId": {
+                    "Ref": "InternetGateway"
+                },
+                "VpcId": {
+                    "Ref": "Vpc"
+                }
+            }
+        },
+        "EgressOnlyInternetGateway": {
+            "Type": "AWS::EC2::EgressOnlyInternetGateway",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "Vpc"
+                }
+            }
+        },
+        "RouteTable": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "Vpc"
+                }
+            }
+        },
+        "Ipv6ToInternet": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "DestinationIpv6CidrBlock": "::/0",
+                "EgressOnlyInternetGatewayId": {
+                    "Ref": "EgressOnlyInternetGateway"
+                },
+                "RouteTableId": {
+                    "Ref": "RouteTable"
+                }
+            }
+        },
+        "Ipv4ToInternet": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "InternetGateway"
+                },
+                "RouteTableId": {
+                    "Ref": "RouteTable"
+                }
+            }
+        },
+        "SubnetA": {
+            "Type": "AWS::EC2::Subnet",
+            "DependsOn": "IPv6CidrBlock",
+            "Properties": {
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        0,
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                },
+                "CidrBlock": {
+                    "Fn::Select": [
+                        0,
+                        {
+                            "Fn::Cidr": [
+                                {
+                                    "Fn::GetAtt": [
+                                        "Vpc",
+                                        "CidrBlock"
+                                    ]
+                                },
+                                2,
+                                8
+                            ]
+                        }
+                    ]
+                },
+                "VpcId": {
+                    "Ref": "Vpc"
+                },
+                "AssignIpv6AddressOnCreation": true,
+                "Ipv6CidrBlock": {
+                    "Fn::Select": [
+                        0,
+                        {
+                            "Fn::Cidr": [
+                                {
+                                    "Fn::Select": [
+                                        0,
+                                        {
+                                            "Fn::GetAtt": [
+                                                "Vpc",
+                                                "Ipv6CidrBlocks"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                2,
+                                64
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "SubnetB": {
+            "Type": "AWS::EC2::Subnet",
+            "DependsOn": "IPv6CidrBlock",
+            "Properties": {
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        1,
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                },
+                "CidrBlock": {
+                    "Fn::Select": [
+                        1,
+                        {
+                            "Fn::Cidr": [
+                                {
+                                    "Ref": "VpcCIDR"
+                                },
+                                2,
+                                8
+                            ]
+                        }
+                    ]
+                },
+                "VpcId": {
+                    "Ref": "Vpc"
+                },
+                "AssignIpv6AddressOnCreation": true,
+                "Ipv6CidrBlock": {
+                    "Fn::Select": [
+                        1,
+                        {
+                            "Fn::Cidr": [
+                                {
+                                    "Fn::Select": [
+                                        0,
+                                        {
+                                            "Fn::GetAtt": [
+                                                "Vpc",
+                                                "Ipv6CidrBlocks"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                2,
+                                64
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "SubnetAv6Egress": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RouteTable"
+                },
+                "SubnetId": {
+                    "Ref": "SubnetA"
+                }
+            }
+        },
+        "SubnetBv6Egress": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "RouteTable"
+                },
+                "SubnetId": {
+                    "Ref": "SubnetB"
+                }
+            }
+        },
+        "ECSCluster": {
+            "Type": "AWS::ECS::Cluster"
+        },
+        "EcsSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "ECS Security Group",
+                "VpcId": {
+                    "Ref": "Vpc"
+                }
+            }
+        },
+        "EcsSecurityGroupHTTPinbound": {
+            "Type": "AWS::EC2::SecurityGroupIngress",
+            "Properties": {
+                "GroupId": {
+                    "Ref": "EcsSecurityGroup"
+                },
+                "IpProtocol": "tcp",
+                "FromPort": 8282,
+                "ToPort": 8282,
+                "CidrIp": "0.0.0.0/0"
+            }
+        },
+        "EcsSecurityGroupHTTPinboundv6": {
+            "Type": "AWS::EC2::SecurityGroupIngress",
+            "Properties": {
+                "GroupId": {
+                    "Ref": "EcsSecurityGroup"
+                },
+                "IpProtocol": "tcp",
+                "FromPort": 8282,
+                "ToPort": 8282,
+                "CidrIpv6": "::/0"
+            }
+        },
+        "CloudwatchLogsGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+                "LogGroupName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            "ECSLogGroup",
+                            {
+                                "Ref": "AWS::StackName"
+                            }
+                        ]
+                    ]
+                },
+                "RetentionInDays": 14
+            }
+        },
+        "TaskExecutionRole": {
+            "Type": "AWS::IAM::Role",
+            "DependsOn": [
+                "ManagementBucket"
+            ],
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "ecs-tasks.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyName": "fargate-task-policy",
+                        "PolicyDocument": {
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "logs:CreateLogStream",
+                                        "logs:PutLogEvents"
+                                    ],
+                                    "Resource": "*"
+                                },
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "s3:*"
+                                    ],
+                                    "Resource": [
+                                        {
+                                            "Fn::GetAtt": [
+                                                "StorageBucket",
+                                                "Arn"
+                                            ]
+                                        },
+                                        {
+                                            "Fn::Join": [
+                                                "",
+                                                [
+                                                    {
+                                                        "Fn::GetAtt": [
+                                                            "StorageBucket",
+                                                            "Arn"
+                                                        ]
+                                                    },
+                                                    "/*"
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "Fn::GetAtt": [
+                                                "ManagementBucket",
+                                                "Arn"
+                                            ]
+                                        },
+                                        {
+                                            "Fn::Join": [
+                                                "",
+                                                [
+                                                    {
+                                                        "Fn::GetAtt": [
+                                                            "ManagementBucket",
+                                                            "Arn"
+                                                        ]
+                                                    },
+                                                    "/*"
+                                                ]
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+                ]
+            }
+        },
+        "taskdefinition": {
+            "Type": "AWS::ECS::TaskDefinition",
+            "Properties": {
+                "Family": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Ref": "AWS::StackName"
+                            },
+                            "-gpf-server"
+                        ]
+                    ]
+                },
+                "RequiresCompatibilities": [
+                    "FARGATE"
+                ],
+                "NetworkMode": "awsvpc",
+                "ExecutionRoleArn": {
+                    "Ref": "TaskExecutionRole"
+                },
+                "TaskRoleArn": {
+                    "Ref": "TaskExecutionRole"
+                },
+                "Cpu": {
+                    "Fn::FindInMap": [
+                        "Main",
+                        "CPU",
+                        "Value"
+                    ]
+                },
+                "Memory": {
+                    "Fn::FindInMap": [
+                        "Main",
+                        "Memory",
+                        "Value"
+                    ]
+                },
+                "ContainerDefinitions": [
+                    {
+                        "Name": "gpf-server-container",
+                        "Cpu": {
+                            "Fn::FindInMap": [
+                                "Main",
+                                "CPU",
+                                "Value"
+                            ]
+                        },
+                        "Memory": {
+                            "Fn::FindInMap": [
+                                "Main",
+                                "Memory",
+                                "Value"
+                            ]
+                        },
+                        "Image": {
+                            "Fn::FindInMap": [
+                                "Main",
+                                "DockerImage",
+                                "Value"
+                            ]
+                        },
+                        "Environment": [
+                            {
+                                "Name": "SEND_DOWN_EXCEPTIONS",
+                                "Value": {
+                                    "Fn::FindInMap": [
+                                        "Main",
+                                        "SendExceptionsToClient",
+                                        "Value"
+                                    ]
+                                }
+                            },
+                            {
+                                "Name": "USE_GPF_SSL",
+                                "Value": {
+                                    "Fn::If": [
+                                        "UseLoadBalancer",
+                                        "false",
+                                        "true"
+                                    ]
+                                }
+                            },
+                            {
+                                "Name": "MGT_BUCKET_NAME",
+                                "Value": {
+                                    "Ref": "ManagementBucket"
+                                }
+                            },
+                            {
+                                "Name": "STG_BUCKET_NAME",
+                                "Value": {
+                                    "Ref": "StorageBucket"
+                                }
+                            },
+                            {
+                                "Name": "REGION",
+                                "Value": {
+                                    "Ref": "AWS::Region"
+                                }
+                            },
+                            {
+                                "Name": "USE_ENCRYPTION",
+                                "Value": {
+                                    "Fn::FindInMap": [
+                                        "Main",
+                                        "UseEncryption",
+                                        "Value"
+                                    ]
+                                }
+                            },
+                            {
+                                "Name": "CRYPTO_KEY_1",
+                                "Value": {
+                                    "Ref": "CryptoKey1"
+                                }
+                            },
+                            {
+                                "Name": "CRYPTO_KEY_2",
+                                "Value": {
+                                    "Ref": "CryptoKey2"
+                                }
+                            }
+                        ],
+                        "PortMappings": [
+                            {
+                                "ContainerPort": 8282
+                            }
+                        ],
+                        "Essential": "true",
+                        "LogConfiguration": {
+                            "LogDriver": "awslogs",
+                            "Options": {
+                                "awslogs-group": {
+                                    "Ref": "CloudwatchLogsGroup"
+                                },
+                                "awslogs-region": {
+                                    "Ref": "AWS::Region"
+                                },
+                                "awslogs-stream-prefix": "gpf-server"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "ECSALB": {
+            "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+            "Condition": "UseLoadBalancer",
+            "Properties": {
+                "Scheme": "internet-facing",
+                "Subnets": [
+                    {
+                        "Ref": "SubnetA"
+                    },
+                    {
+                        "Ref": "SubnetB"
+                    }
+                ],
+                "SecurityGroups": [
+                    {
+                        "Ref": "EcsSecurityGroup"
+                    }
+                ]
+            }
+        },
+        "RecordSetIpv4": {
+            "Type": "AWS::Route53::RecordSet",
+            "Condition": "UseLoadBalancer",
+            "Properties": {
+                "Comment": "Created by GPF",
+                "HostedZoneId": {
+                    "Fn::FindInMap": [
+                        "Main",
+                        "HostedZoneId",
+                        "Value"
+                    ]
+                },
+                "Name": {
+                    "Fn::FindInMap": [
+                        "Main",
+                        "Domain",
+                        "Value"
+                    ]
+                },
+                "Type": "A",
+                "AliasTarget": {
+                    "HostedZoneId": {
+                        "Fn::GetAtt": [
+                            "ECSALB",
+                            "CanonicalHostedZoneID"
+                        ]
+                    },
+                    "DNSName": {
+                        "Fn::GetAtt": [
+                            "ECSALB",
+                            "DNSName"
+                        ]
+                    }
+                }
+            }
+        },
+        "ALBListener": {
+            "Type": "AWS::ElasticLoadBalancingV2::Listener",
+            "Condition": "UseLoadBalancer",
+            "Properties": {
+                "DefaultActions": [
+                    {
+                        "Type": "forward",
+                        "TargetGroupArn": {
+                            "Ref": "ECSTG"
+                        }
+                    }
+                ],
+                "LoadBalancerArn": {
+                    "Ref": "ECSALB"
+                },
+                "Port": 8282,
+                "Protocol": "HTTPS",
+                "Certificates": [
+                    {
+                        "CertificateArn": {
+                            "Fn::FindInMap": [
+                                "Main",
+                                "Cert",
+                                "Value"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "ECSTG": {
+            "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+            "DependsOn": "ECSALB",
+            "Condition": "UseLoadBalancer",
+            "Properties": {
+                "TargetType": "ip",
+                "HealthCheckIntervalSeconds": 10,
+                "HealthCheckPath": "/",
+                "HealthCheckProtocol": "HTTP",
+                "HealthCheckTimeoutSeconds": 5,
+                "HealthyThresholdCount": 2,
+                "Port": 8282,
+                "Protocol": "HTTP",
+                "IpAddressType": "ipv4",
+                "UnhealthyThresholdCount": 2,
+                "VpcId": {
+                    "Ref": "Vpc"
+                }
+            }
+        },
+        "Service": {
+            "Type": "AWS::ECS::Service",
+            "Properties": {
+                "LaunchType": "FARGATE",
+                "Cluster": {
+                    "Ref": "ECSCluster"
+                },
+                "DesiredCount": "%INITIAL_TASK_COUNT%",
+                "LoadBalancers": {
+                    "Fn::If": [
+                        "UseLoadBalancer",
+                        [
+                            {
+                                "ContainerName": "gpf-server-container",
+                                "ContainerPort": 8282,
+                                "TargetGroupArn": {
+                                    "Ref": "ECSTG"
+                                }
+                            }
+                        ],
+                        []
+                    ]
+                },
+                "NetworkConfiguration": {
+                    "AwsvpcConfiguration": {
+                        "AssignPublicIp": "ENABLED",
+                        "SecurityGroups": [
+                            {
+                                "Ref": "EcsSecurityGroup"
+                            }
+                        ],
+                        "Subnets": [
+                            {
+                                "Ref": "SubnetA"
+                            },
+                            {
+                                "Ref": "SubnetB"
+                            }
+                        ]
+                    }
+                },
+                "TaskDefinition": {
+                    "Ref": "taskdefinition"
+                },
+                "Tags": [
+                    {
+                        "Key": "ALBListener",
+                        "Value": {
+                            "Fn::If": [
+                                "UseLoadBalancer",
+                                {
+                                    "Ref": "ALBListener"
+                                },
+                                "None"
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "ManagementBucket": {
+            "Value": {
+                "Ref": "ManagementBucket"
+            },
+            "Description": "S3 bucket to store configs and library for containers"
+        },
+        "StorageBucket": {
+            "Value": {
+                "Ref": "StorageBucket"
+            },
+            "Description": "S3 bucket to store saved state"
+        },
+        "ClusterId": {
+            "Value": {
+                "Ref": "ECSCluster"
+            },
+            "Description": "The ECS cluster"
+        },
+        "ServiceId": {
+            "Value": {
+                "Ref": "Service"
+            },
+            "Description": "The Service"
+        },
+        "CPU": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "CPU",
+                    "Value"
+                ]
+            },
+            "Description": "The CPU units for the container"
+        },
+        "Memory": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "Memory",
+                    "Value"
+                ]
+            },
+            "Description": "The memory for each container (in megabytes)"
+        },
+        "Domain": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "Domain",
+                    "Value"
+                ]
+            },
+            "Description": "The domain name (including the subdomain) for DNS and SSL"
+        },
+        "HostedZoneId": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "HostedZoneId",
+                    "Value"
+                ]
+            },
+            "Description": "The hosted zone ID for the DNS domain"
+        },
+        "Cert": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "Cert",
+                    "Value"
+                ]
+            },
+            "Description": "The certificate for HTTPS to load balancer"
+        },
+        "UseDNS": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "UseDNS",
+                    "Value"
+                ]
+            },
+            "Description": "Should the backend use DNS"
+        },
+        "Subdomain": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "Subdomain",
+                    "Value"
+                ]
+            },
+            "Description": "The subdomain used"
+        },
+        "UseEncryption": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "UseEncryption",
+                    "Value"
+                ]
+            },
+            "Description": "Whether or not to encrypt public SOIDs"
+        },
+        "AuthServerConfigs": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "AuthServerConfigs",
+                    "Value"
+                ]
+            },
+            "Description": "The current selected auth providers"
+        },
+        "Versions": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "Versions",
+                    "Value"
+                ]
+            },
+            "Description": "Versions for different components"
+        },
+        "SoEnv": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "SoEnv",
+                    "Value"
+                ]
+            },
+            "Description": "Env variables"
+        },
+        "ClearStorageOnDeploy": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "ClearStorageOnDeploy",
+                    "Value"
+                ]
+            },
+            "Description": "Should backend storage be cleared when server is updated (dev)"
+        },
+        "SendExceptionsToClient": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "SendExceptionsToClient",
+                    "Value"
+                ]
+            },
+            "Description": "Should errors be reported to the client app (dev)"
+        }
+    }
+}

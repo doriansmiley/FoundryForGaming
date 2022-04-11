@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>$ASSEMBLY_NAME</AssemblyName>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputPath>$OUTPUT_PATH</OutputPath>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Deterministic>true</Deterministic>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MsgPack.Cli" Version="1.0.1" />
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.0.0"/>
+    <PackageReference Include="jose-jwt" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
+    <PackageReference Include="dotAPNS" Version="4.2.0" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.3.17"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="libGPFSharedCore">
+      <HintPath>$LIB_GPF_SHARED_CORE</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+        <Compile Include="$SOURCE_PATTERN"/>
+  </ItemGroup>
+  <ItemGroup>
+        <Compile Include="$GENERATED_CODE_PATH"/>
+  </ItemGroup>
+</Project>
