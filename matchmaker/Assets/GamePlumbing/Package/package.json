@@ -1,0 +1,11 @@
+{
+	"name": "com.gameplumbers.gpf",
+	"version": "1.0.0",
+	"displayName": "Game Plumbing Framework",
+	"description": "Build custom objects like leaderboards, matchmaking rooms, maps, and player state that simply inherit persistence, security, scalability and synchronicity.",
+	"unity": "2019.4",
+	"keywords": ["server", "multiplayer", "map", "leaderboard", "matchmaker", "multiplayer", "persistent", "scalability", "security", "synchronicity", "synchronous", "aws", "dynamodb", "serverless"],
+	"dependencies": {
+
+	}
+}
