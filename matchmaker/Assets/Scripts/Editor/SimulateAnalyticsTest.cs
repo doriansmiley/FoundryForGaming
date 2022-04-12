@@ -27,6 +27,13 @@ namespace MatchmakerTests
 
         public override async Task Run()
         {
+            if (RuntimeSettings.DeployEnv.IsSimulated)
+            {
+                if (DateTime.Now - timeService.Now > TimeSpan.FromHours(2))
+                {
+                    await Delay(DateTime.Now - timeService.Now - TimeSpan.FromHours(1));
+                }
+            }
             var tasks = new List<Task>();
 
             var matchmakerId = MatchmakerSO.GetTestSuffix();
@@ -127,8 +134,29 @@ namespace MatchmakerTests
                 field.SetValue(msg, value);
             }
 
-            msg.Element = "element";
-            msg.Label = "label";
+            msg.Element = msg.GetType().Name.ToLower();
+            switch(msg.GetType().Name)
+            {
+                case "Match":
+                    msg.Label = "Join Matchmaking";
+                    break;
+                case "Accept":
+                    msg.Label = "Accept";
+                    break;
+                case "Move":
+                    var move = msg as MatchPlayerSO.Move;
+                    msg.Label = move.move.ToString();
+                    break;
+                case "LeaveTable":
+                    msg.Label = "Leave";
+                    break;
+                case "MakePurchase":
+                    msg.Label = "Buy";
+                    break;
+                case "RejectPurchase":
+                    msg.Label = "No Thanks";
+                    break;
+            }
 
             return msg;
         }
