@@ -21,7 +21,10 @@ namespace ServerObjects
             public string sessionId;
             public string deviceID;
             public string platform;
-            public string version = SchemaVersion;
+            public string version;
+            public string language;
+            public string device;
+            public string resolution;
             public Dictionary<string, object> evtAttributes = new Dictionary<string, object>();
         }
 
@@ -58,6 +61,9 @@ namespace ServerObjects
                 sessionId = sessionId,
                 deviceID = message.DeviceId,
                 platform = message.Platform,
+                language = message.Language,
+                device = message.DeviceName,
+                resolution = message.Resolution,
             };
             foreach (var kvp in state)
             {

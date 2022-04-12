@@ -27,6 +27,12 @@ namespace ServerObjects
 
         public string Interaction = GetInteraction();
 
+        public string Language = GetDeviceLanguage();
+
+        public string DeviceName = GetDeviceName();
+
+        public string Resolution = GetDeviceResolution();
+
         public DateTime timestamp { get; set; }
 
         static string GetElement()
@@ -74,6 +80,33 @@ namespace ServerObjects
             {
                 return "automation";
             }
+#else
+            return "";
+#endif
+        }
+
+        static string GetDeviceLanguage()
+        {
+#if UNITY_2017_1_OR_NEWER
+            return UnityEngine.Application.systemLanguage.ToString();
+#else
+            return "";
+#endif
+        }
+
+        static string GetDeviceName()
+        {
+#if UNITY_2017_1_OR_NEWER
+            return UnityEngine.SystemInfo.deviceModel;
+#else
+            return "";
+#endif
+        }
+
+        static string GetDeviceResolution()
+        {
+#if UNITY_2017_1_OR_NEWER
+            return UnityEngine.Screen.currentResolution.ToString();
 #else
             return "";
 #endif
