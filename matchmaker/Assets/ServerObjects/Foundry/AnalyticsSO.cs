@@ -54,10 +54,12 @@ namespace ServerObjects
         {
             var uid = $"{PublicID}-{UpdateOrder}";
             var evtAttributes = GetMessageFields(message);
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var secondsSinceEpoch = Convert.ToInt64((message.timestamp - epoch).TotalMilliseconds);
             var e = new Event
             {
                 uid = uid,
-                ts = message.timestamp.ToFileTimeUtc().ToString(),
+                ts = secondsSinceEpoch.ToString(),
                 sessionId = sessionId,
                 deviceID = message.DeviceId,
                 platform = message.Platform,
