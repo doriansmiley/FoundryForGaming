@@ -5,21 +5,9 @@ namespace ServerObjects
 {
     public abstract class AnalyticsMessage : ServerObjectMessage, ITimeStampReceiver
     {
-        public string DeviceId =
-#if UNITY_2017_1_OR_NEWER
-            UnityEngine.SystemInfo.deviceUniqueIdentifier
-#else
-            ""
-#endif
-            ;
+        public string DeviceId = GetDeviceId();
 
-        public string Platform =
-#if UNITY_2017_1_OR_NEWER
-            UnityEngine.SystemInfo.operatingSystem
-#else
-            ""
-#endif
-            ;
+        public string Platform = GetPlatform();
 
         public string Element = GetElement();
 
@@ -34,6 +22,24 @@ namespace ServerObjects
         public string Resolution = GetDeviceResolution();
 
         public DateTime timestamp { get; set; }
+
+        static string GetDeviceId()
+        {
+#if UNITY_2017_1_OR_NEWER
+            return UnityEngine.SystemInfo.deviceUniqueIdentifier;
+#else
+            return "";
+#endif
+        }
+
+        static string GetPlatform()
+        {
+#if UNITY_2017_1_OR_NEWER
+            return UnityEngine.SystemInfo.operatingSystem;
+#else
+            return "";
+#endif
+        }
 
         static string GetElement()
         {
