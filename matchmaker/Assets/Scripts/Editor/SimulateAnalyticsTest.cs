@@ -47,6 +47,8 @@ namespace MatchmakerTests
 
         async Task PlayerBehaviour(Syncer syncer, SOID<MatchPlayerSO> id)
         {
+            var rand = new System.Random();
+
             var player = await syncer.Sync(id);
 
             AnalyticsContext context = GetContext();
@@ -88,8 +90,20 @@ namespace MatchmakerTests
 
                     await DelayUserInteraction();
 
+                    var won = player.state == MatchPlayerSO.State.GAME_WON;
+
                     // Leave table
                     await syncer.SendWait(id, AddAnalytics(new MatchPlayerSO.LeaveTable {}, context));
+
+                    // Simulate showing the purchase screen occasionally
+                    if (j == GAMES_PER_SESSION - 2)
+                    {
+                        await syncer.SendWait(id, new MatchPlayerSO.GoToPurchaseOffer());
+                        if (won || rand.Next(3) == 0)
+                            await syncer.SendWait(id, AddAnalytics(new MatchPlayerSO.MakePurchase { }, context));
+                        else
+                            await syncer.SendWait(id, AddAnalytics(new MatchPlayerSO.RejectPurchase { }, context));
+                    }
                 }
                 await Delay(TIME_BETWEEN_SESSIONS);
             }
@@ -98,7 +112,7 @@ namespace MatchmakerTests
         MatchGameSO.Move GetRandomMove()
         {
             Array values = Enum.GetValues(typeof(MatchGameSO.Move));
-            Random random = new Random();
+            Random random = new System.Random();
             var result = (MatchGameSO.Move)values.GetValue(random.Next(values.Length-1)+1);
             return result;
         }
@@ -128,7 +142,7 @@ namespace MatchmakerTests
 
             var platforms = new string[] { "Android", "iOS", "Windows", "Xbox", };
             var interactions = new string[] { "touch", "touch", "click", "click", };
-            Random rand = new Random();
+            Random rand = new System.Random();
             int choice = rand.Next(platforms.Length);
             context.Platform = platforms[choice];
             context.Interaction = interactions[choice];

@@ -21,7 +21,7 @@ namespace ServerObjects
             public string sessionId;
             public string deviceID;
             public string platform;
-            public string version;
+            public string version = SchemaVersion;
             public string language;
             public string device;
             public string resolution;

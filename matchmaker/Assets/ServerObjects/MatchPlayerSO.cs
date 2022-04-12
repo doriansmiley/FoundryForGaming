@@ -20,6 +20,7 @@ namespace ServerObjects
             GAME_WON,
             GAME_LOST,
             GAME_DRAW,
+            PURCHASE_OFFER,
         };
         
         public State state = State.IDLE;
@@ -98,6 +99,27 @@ namespace ServerObjects
                 state = State.GAME_WAITING;
                 move = msg.move;
             }
+        }
+
+        public class GoToPurchaseOffer : ServerObjectMessage {}
+        [FromClient]
+        void Handler(GoToPurchaseOffer msg)
+        {
+            state = State.PURCHASE_OFFER;
+        }
+
+        public class MakePurchase : AnalyticsMessage { }
+        [FromClient]
+        void Handler(MakePurchase msg)
+        {
+            state = State.IDLE;
+        }
+
+        public class RejectPurchase : AnalyticsMessage { }
+        [FromClient]
+        void Handler(RejectPurchase msg)
+        {
+            state = State.IDLE;
         }
 
         // From Matchmaker
