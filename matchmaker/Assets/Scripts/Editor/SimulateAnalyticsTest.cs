@@ -17,13 +17,18 @@ namespace MatchmakerTests
         {
         }
 
-        const int TOTAL_PLAYERS = 5;
+        const int TOTAL_PLAYERS = 20;
         static TimeSpan PLAYER_SPAWN_RATE = TimeSpan.FromSeconds(10);
         const int GAMES_PER_SESSION = 5;
+        const int GAMES_PER_SESSION_RANGE = 5;
         const int SESSIONS_PER_PLAYER = 5;
-        static TimeSpan TIME_BETWEEN_SESSIONS = TimeSpan.FromMinutes(7);
+        static TimeSpan TIME_BETWEEN_SESSIONS = TimeSpan.FromMinutes(6);
+        static TimeSpan TIME_BETWEEN_SESSIONS_RANGE = TimeSpan.FromMinutes(2);
         static TimeSpan TOTAL_TEST_LENGTH = TimeSpan.FromMinutes(60);
         const int USER_INTERACTION_DELAY = 1100;
+        const int USER_INTERACTION_DELAY_RANGE = 400;
+
+        static Random rand = new System.Random();
 
         public override async Task Run()
         {
@@ -54,7 +59,6 @@ namespace MatchmakerTests
 
         async Task PlayerBehaviour(Syncer syncer, SOID<MatchPlayerSO> id)
         {
-            var rand = new System.Random();
 
             var player = await syncer.Sync(id);
 
@@ -63,7 +67,8 @@ namespace MatchmakerTests
             for (int i = 0; i < SESSIONS_PER_PLAYER; i++)
             {
                 LogInfo($"Session {i}");
-                for (int j = 0; j < GAMES_PER_SESSION; j++)
+                int gamesThisSession = GAMES_PER_SESSION + rand.Next(GAMES_PER_SESSION_RANGE);
+                for (int j = 0; j < gamesThisSession; j++)
                 {
                     LogInfo($"Playing Game {j}");
 
@@ -112,7 +117,8 @@ namespace MatchmakerTests
                             await syncer.SendWait(id, AddAnalytics(new MatchPlayerSO.RejectPurchase { }, context));
                     }
                 }
-                await Delay(TIME_BETWEEN_SESSIONS);
+                var randomTime = TimeSpan.FromSeconds(rand.Next((int)TIME_BETWEEN_SESSIONS_RANGE.TotalSeconds));
+                await Delay(TIME_BETWEEN_SESSIONS + randomTime);
             }
         }
 
@@ -191,8 +197,9 @@ namespace MatchmakerTests
 
         async Task DelayUserInteraction()
         {
-            // TODO: Add noise
-            await Delay(USER_INTERACTION_DELAY);
+            var noise = rand.Next(USER_INTERACTION_DELAY_RANGE) - USER_INTERACTION_DELAY_RANGE/2;
+            var delay = USER_INTERACTION_DELAY + noise;
+            await Delay(delay);
         }
     }
 }
