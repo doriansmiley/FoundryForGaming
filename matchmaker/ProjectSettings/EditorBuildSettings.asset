@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Matchmaker.unity
+    guid: daa3c7b9cd5c08e428b66d31b4b7e81e
   m_configObjects: {}

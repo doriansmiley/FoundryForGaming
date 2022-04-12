@@ -9,7 +9,7 @@ namespace ServerObjects
 {
     public abstract class AnalyticsSO : ServerObject
     {
-        public const string URL = "TBD";
+        public const string URL = "https://bright-app-v2ivb.cloud.serverless.com/events";
         static TimeSpan SessionTimeout = TimeSpan.FromMinutes(5);
 
         class Event
@@ -23,6 +23,11 @@ namespace ServerObjects
             public string platform;
             public string version = SchemaVersion;
             public Dictionary<string, object> evtAttributes = new Dictionary<string, object>();
+        }
+
+        class ServerMessage
+        {
+            public List<Event> events = new List<Event>();
         }
 
         public int CurrentSession;
@@ -60,10 +65,12 @@ namespace ServerObjects
                     evtAttributes[kvp.Key] = kvp.Value;
             }
             e.evtAttributes = evtAttributes;
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(e);
+            var serverMessage = new ServerMessage();
+            serverMessage.events.Add(e);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(serverMessage);
 
-            if (URL == "TBD")
-                Logger.Log("Event: " + json);
+            if (Env[ServerObjectEnv.Included.BACKEND] == "Simulation")
+                Logger.Warning("Event: " + json);
             else
                 await SendRequest(json);
         }
