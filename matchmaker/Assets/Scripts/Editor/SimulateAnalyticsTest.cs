@@ -68,6 +68,7 @@ namespace MatchmakerTests
             {
                 LogInfo($"Session {i}");
                 int gamesThisSession = GAMES_PER_SESSION + rand.Next(GAMES_PER_SESSION_RANGE);
+                var losses = new List<bool>();
                 for (int j = 0; j < gamesThisSession; j++)
                 {
                     LogInfo($"Playing Game {j}");
@@ -103,12 +104,31 @@ namespace MatchmakerTests
                     await DelayUserInteraction();
 
                     var won = player.state == MatchPlayerSO.State.GAME_WON;
+                    var lost = player.state == MatchPlayerSO.State.GAME_LOST;
+                    losses.Add(lost);
+
 
                     // Leave table
                     await syncer.SendWait(id, AddAnalytics(new MatchPlayerSO.LeaveTable {}, context));
 
+                    // Add some rage quit cases
+                    if (losses.Count >= 2 && losses[losses.Count-1] && losses[losses.Count - 2])
+                    {
+                        // If these are your first 2 matches, rage quit forever. Otherwise, end session
+                        if (losses.Count == 2)
+                        {
+                            LogInfo("Rage quit!");
+                            return;
+                        }
+                        else
+                        {
+                            LogInfo("Ending session early");
+                            break;
+                        }
+                    }
+
                     // Simulate showing the purchase screen occasionally
-                    if (j == GAMES_PER_SESSION - 2)
+                    if (j%3 == 2)
                     {
                         await syncer.SendWait(id, new MatchPlayerSO.GoToPurchaseOffer());
                         if (won || rand.Next(3) == 0)
@@ -125,8 +145,7 @@ namespace MatchmakerTests
         MatchGameSO.Move GetRandomMove()
         {
             Array values = Enum.GetValues(typeof(MatchGameSO.Move));
-            Random random = new System.Random();
-            var result = (MatchGameSO.Move)values.GetValue(random.Next(values.Length-1)+1);
+            var result = (MatchGameSO.Move)values.GetValue(rand.Next(values.Length-1)+1);
             return result;
         }
 
