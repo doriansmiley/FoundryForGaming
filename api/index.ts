@@ -29,10 +29,12 @@ type Event = {
   platform: string;
   version: string;
   evtAttributes: {
-    screen: string;
-    element: string;
-    label: string;
-    interaction: string;
+    screen?: string;
+    element?: string;
+    label?: string;
+    interaction?: string;
+    type: string;
+    value?: number
   };
   session: number;
 };
