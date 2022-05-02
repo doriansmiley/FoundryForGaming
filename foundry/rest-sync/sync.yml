@@ -1,0 +1,21 @@
+type: rest-source-adapter2
+cacheToDisk: false
+oneFilePerResponse: false
+outputFileType: json
+restCalls:
+  - type: magritte-do-while-call
+    method: GET
+    checkConditionFirst: true
+    timeBetweenCalls: 60s
+    path: '/events/{%start%}/{%limit%}'
+    parameters:
+      start: '1619774917603'
+      limit: '1000'
+    extractor:
+      - type: magritte-rest-max-json-extractor
+        list: /items
+        item: /value/ts
+        var: start
+    condition:
+      type: magritte-rest-non-empty-condition
+      var: start
