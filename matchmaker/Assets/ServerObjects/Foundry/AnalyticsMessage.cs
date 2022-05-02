@@ -5,6 +5,7 @@ namespace ServerObjects
 {
     public abstract class AnalyticsMessage : ServerObjectMessage, ITimeStampReceiver
     {
+        // TODO: wrap these in a subclass so they don't clutter people's MessageTypes
         public string DeviceId = GetDeviceId();
 
         public string Platform = GetPlatform();

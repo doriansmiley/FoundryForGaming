@@ -33,6 +33,7 @@ namespace ServerObjects
             public List<Event> events = new List<Event>();
         }
 
+        // TODO: Wrap fields in a subclass so they don't clutter the SO
         public int CurrentSession;
         public DateTime LastMessageTime;
 
@@ -44,10 +45,14 @@ namespace ServerObjects
             {
                 var sessionId = GetSessionId(analyticsMessage.timestamp);
                 var currentState = GetAnalyticsState();
+                // TODO: Send the analytics to a central SO, so they can be batched (maybe recorded/displayed in GPF)
                 RunTask(SendAnalytics, analyticsMessage, currentState, sessionId);
             }
         }
 
+        // TODO: Create a field attribute to add things to analytics instead. ex:
+        // [Analytics("screen")]
+        // public State state;
         protected abstract Dictionary<string, object> GetAnalyticsState();
 
         async Task SendAnalytics(AnalyticsMessage message, Dictionary<string, object> state, string sessionId)
