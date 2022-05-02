@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Reflection;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 public class GpfReactShim : MonoBehaviour
 {
@@ -21,10 +22,8 @@ public class GpfReactShim : MonoBehaviour
         public string msgJson;
     }
 
-    public class Unity2ReactMessage
-    {
-        string json;
-    }
+    [DllImport("__Internal")]
+    private static extern void OnServerObjectChange(string json);
 
     Syncer syncer;
 
@@ -45,6 +44,17 @@ public class GpfReactShim : MonoBehaviour
                     messageTypes[t.FullName] = t;
             }
         }
+    }
+
+    private void Start()
+    {
+        Invoke(nameof(this.TestSync), 5);
+    }
+
+    void TestSync()
+    {
+        var soid = Registry.GetId<MatchPlayerSO>();
+        Sync(soid);
     }
 
     public void OnReactMessage(string react2UnityMessageJson)
@@ -87,7 +97,7 @@ public class GpfReactShim : MonoBehaviour
     void OnServerObjectChanged(ServerObject so)
     {
         var json = JsonConvert.SerializeObject(so);
-
+        OnServerObjectChange(json);
     }
 
     private void OnApplicationPause(bool pause)
