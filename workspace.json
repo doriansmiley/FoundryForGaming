@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "hello-world-modules-planets-module": "libs/hello-world/modules/planets-module",
+    "hello-world-modules-planets-module-e2e": "apps/hello-world-modules-planets-module-e2e"
+  }
+}
