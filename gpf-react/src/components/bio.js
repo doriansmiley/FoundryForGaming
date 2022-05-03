@@ -8,6 +8,7 @@
 import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
+import { useDispatch, useSelector } from "react-redux"
 
 const Bio = () => {
   const data = useStaticQuery(graphql`
@@ -29,6 +30,8 @@ const Bio = () => {
   // Set these values by editing "siteMetadata" in gatsby-config.js
   const author = data.site.siteMetadata?.author
   const social = data.site.siteMetadata?.social
+  const tested = useSelector(state => state.appReducer.tested)
+  let message = tested ? "tested" : "not tested"
 
   return (
     <div className="bio">
@@ -44,7 +47,7 @@ const Bio = () => {
       />
       {author?.name && (
         <p>
-          Written by <strong>{author.name}</strong> {author?.summary || null}
+          Written by <strong>{message}</strong> {author?.summary || null}
           {` `}
           <a href={`https://twitter.com/${social?.twitter || ``}`}>
             You should follow them on Twitter
