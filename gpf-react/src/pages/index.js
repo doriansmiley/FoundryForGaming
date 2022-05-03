@@ -40,6 +40,7 @@ const BlogIndex = ({ data, location }) => {
   return (
     <Provider store={store}>
       <Layout location={location} title={siteTitle}>
+        <canvas id="unity-canvas" width="100%" height="100%"></canvas>
         <Seo title="All posts" />
         <Bio />
         <ol style={{ listStyle: `none` }}>
