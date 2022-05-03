@@ -6,9 +6,16 @@ import store from "./store"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import * as types from "./appActionTypes"
 
 // HACK: Make reduce available to Unity
 window.reduxStore = store
+
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time))
+}
+
+delay(1000).then(() => store.dispatch({ type: types.TEST }))
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
