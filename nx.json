@@ -6,6 +6,19 @@
   "cli": {
     "defaultCollection": "@nrwl/workspace"
   },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint"
+      }
+    }
+  },
   "implicitDependencies": {
     "package.json": {
       "dependencies": "*",
@@ -21,7 +34,8 @@
           "build",
           "lint",
           "test",
-          "e2e"
+          "e2e",
+          "build-storybook"
         ],
         "accessToken": "OWMyN2VhNGEtZGM4Ni00ZDc5LTlkNWMtYWY1MDJjNjMyZDc0fHJlYWQtd3JpdGU="
       }

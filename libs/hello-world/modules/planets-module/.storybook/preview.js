@@ -1,1 +1,1 @@
-import '../../../../../.storybook/nx/preview';
+import '../../../../../.storybook/preview';

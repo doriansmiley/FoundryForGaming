@@ -1,4 +1,4 @@
-const rootMain = require('../../../../../.storybook/nx/main');
+const rootMain = require('../../../../../.storybook/main');
 
 module.exports = {
   ...rootMain,
