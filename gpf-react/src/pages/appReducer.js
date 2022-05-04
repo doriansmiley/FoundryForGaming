@@ -11,9 +11,11 @@ export default function appReducer(state = initialState, action) {
   switch (action.type) {
     // Do something here based on the different types of actions
     case types.SET_SO_STATE: {
-      let so = action.payload
+      let json = action.json
+      console.log("JSON " + json)
+      let so = JSON.parse(json)
       let newSos = { ...state.sos }
-      newSos[so.ID] = so
+      newSos[so.ID.id] = so
       return { ...state, sos: newSos }
     }
     case types.TEST: {

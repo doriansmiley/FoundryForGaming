@@ -2,8 +2,6 @@
 using ServerObjects;
 using GPF.ServerObjects;
 using GPF;
-using GPF.UI.AutoComplete;
-using UnityEngine.EventSystems;
 using Newtonsoft.Json;
 using System.Reflection;
 using System;
@@ -44,6 +42,7 @@ public class GpfReactShim : MonoBehaviour
                     messageTypes[t.FullName] = t;
             }
         }
+        Application.targetFrameRate = 30;
     }
 
     private void Start()
