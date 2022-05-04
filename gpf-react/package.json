@@ -53,7 +53,7 @@
     "start": "gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "unity": "\"C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Unity.exe\" -batchmode -executeMethod BuildWebBackend.Build -projectPath ../matchmaker && gatsby develop",
+    "unity": "\"C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Unity.exe\" -batchmode -executeMethod BuildWebBackend.Build -projectPath ../matchmaker && del /f /s /q \"static/unity\" && copy \"../matchmaker/Build/web/Build\" \"static/unity\" && gatsby develop",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   }
 }
