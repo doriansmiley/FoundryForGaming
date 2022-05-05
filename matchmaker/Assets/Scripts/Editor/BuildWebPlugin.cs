@@ -5,10 +5,10 @@ using UnityEngine;
 using System;
 using UnityEditor.Callbacks;
 
-public static class BuildWebBackend
+public static class BuildWebPlugin
 {
-    [MenuItem("BUILD/Test")]
-    static void Build()
+    [MenuItem("BUILD/Local")]
+    static void Local()
     {
         try
         {
@@ -17,7 +17,29 @@ public static class BuildWebBackend
             var uri = System.Environment.GetEnvironmentVariable("BACKEND_URI");
 
             userSettings.deployEnv.backendType = DeployEnv.BACKEND_TYPE.SIMULATED;
-            //userSettings.deployEnv.CustomURI = uri;
+
+            string[] scenes = { "Assets/React.unity" };
+            var report = BuildPipeline.BuildPlayer(scenes, "Build/web", BuildTarget.WebGL, BuildOptions.None);
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+            if (Application.isBatchMode)
+                EditorApplication.Exit(1);
+        }
+    }
+
+    [MenuItem("BUILD/Remote")]
+    static void Remote()
+    {
+        try
+        {
+            var userSettings = GPFSettings.userSettings;
+
+            var uri = System.Environment.GetEnvironmentVariable("BACKEND_URI");
+
+            userSettings.deployEnv.backendType = DeployEnv.BACKEND_TYPE.CUSTOM_URL;
+            userSettings.deployEnv.CustomURI = uri;
 
             string[] scenes = { "Assets/React.unity" };
             var report = BuildPipeline.BuildPlayer(scenes, "Build/web", BuildTarget.WebGL, BuildOptions.None);
