@@ -35,7 +35,7 @@
                 "Value": "%MEMORY%"
             },
             "DockerImage": {
-                "Value": "public.ecr.aws/a9v5u2b1/gpf-server-base:2504"
+                "Value": "public.ecr.aws/a9v5u2b1/gpf-server-base:2525"
             },
             "Domain": {
                 "Value": "%DOMAIN%"
@@ -69,6 +69,9 @@
             },
             "SendExceptionsToClient": {
                 "Value": "%SEND_EXCEPTIONS_TO_CLIENT%"
+            },
+            "ServerLogLevel": {
+                "Value": "%GPF_SERVER_LOG_LEVEL%"
             }
         }
     },
@@ -531,6 +534,16 @@
                         },
                         "Environment": [
                             {
+                                "Name": "GPF_SERVER_LOG_LEVEL",
+                                "Value": {
+                                    "Fn::FindInMap": [
+                                        "Main",
+                                        "ServerLogLevel",
+                                        "Value"
+                                    ]
+                                }
+                            },
+                            {
                                 "Name": "SEND_DOWN_EXCEPTIONS",
                                 "Value": {
                                     "Fn::FindInMap": [
@@ -934,6 +947,16 @@
                 ]
             },
             "Description": "Should errors be reported to the client app (dev)"
+        },
+        "ServerLogLevel": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "ServerLogLevel",
+                    "Value"
+                ]
+            },
+            "Description": "Set the log level for the server framework."
         }
     }
 }
