@@ -18,9 +18,13 @@ export type ExperimentFactory = <T>(
   | (({ref}: {ref: MutableRefObject<any>}) => void);
 
 function useMockExperiments(key:string) {
-  return {
-    variant: '1',
-    pending: false
+  switch (key) {
+    case 'experiment123':
+    default:
+      return {
+        variant: '1',
+        pending: false
+      }
   }
 }
 
