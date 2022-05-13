@@ -1,4 +1,12 @@
-export function loadUnity() {
+window.gpfReact = {}
+window.gpfReact.loading = {}
+window.gpfReact.loading.promise = new Promise((resolve, reject) => {
+  window.gpfReact.loading.reject = reject
+  window.gpfReact.loading.resolve = resolve
+})
+export function Load(reduxStore) {
+  // HACK: Make reduce available to Unity
+  window.reduxStore = reduxStore
   var buildUrl = "unity"
   var loaderUrl = buildUrl + "/web.loader.js"
   var config = {
@@ -19,10 +27,9 @@ export function loadUnity() {
   // the canvas DOM size and WebGL render target sizes yourself.
   // config.matchWebGLToCanvasSize = false;
 
-  var canvas = document.querySelector("#unity-canvas")
+  var canvas = document.createElement("CANVAS")
   canvas.style.width = "100%"
   canvas.style.height = "100%"
-
   var script = document.createElement("script")
   script.src = loaderUrl
   var unity = null
@@ -30,10 +37,55 @@ export function loadUnity() {
     window["createUnityInstance"](canvas, config, progress => {})
       .then(unityInstance => {
         unity = unityInstance
+        {
+          let message = { cmd: "SYNC", soid: "match_player/afterLoad" }
+          let jsonMsg = JSON.stringify(message)
+          unityInstance.SendMessage("GPFShim", "OnReactMessage", jsonMsg)
+        }
+
+        window.gpfReact.Sync = soid => {
+          let message = { cmd: "SYNC", soid }
+          let jsonMsg = JSON.stringify(message)
+          unityInstance.SendMessage("GPFShim", "OnReactMessage", jsonMsg)
+        }
+
+        window.gpfReact.Unsync = soid => {
+          let message = { cmd: "UNSYNC", soid }
+          let jsonMsg = JSON.stringify(message)
+          unityInstance.SendMessage("GPFShim", "OnReactMessage", jsonMsg)
+        }
+
+        window.gpfReact.Send = (soid, type, json) => {
+          let message = { cmd: "SEND", soid, msgType: type, msgJson: json }
+          let jsonMsg = JSON.stringify(message)
+          unityInstance.SendMessage("GPFShim", "OnReactMessage", jsonMsg)
+        }
+        window.gpfReact.loading.resolve()
       })
       .catch(message => {
-        alert(message)
+        console.error(message)
+        window.gpfReact.loading.reject()
       })
   }
   document.body.appendChild(script)
+  return window.gpfReact.loading
+}
+
+export function Sync(soid) {
+  window.gpfReact.loading.promise.then(() => {
+    window.gpfReact.Sync(soid)
+  })
+}
+
+export function Unsync(soid) {
+  window.gpfReact.loading.promise.then(() => {
+    window.gpfReact.Unsync(soid)
+  })
+}
+
+export function Send(soid, type, message) {
+  let json = JSON.stringify(message)
+  window.gpfReact.loading.promise.then(() => {
+    window.gpfReact.Send(soid, type, json)
+  })
 }

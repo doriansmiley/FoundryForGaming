@@ -129,6 +129,7 @@ namespace ServerObjects
             result["element"] = message.Element;
             result["label"] = message.Label;
             result["interaction"] = message.Interaction;
+            result["screen"] = message.Screen;
 
             return result;
         }

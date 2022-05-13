@@ -54,7 +54,7 @@
     "start": "gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "local": "\"C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Unity.exe\" -batchmode -executeMethod BuildWebPlugin.Local -projectPath ../matchmaker && del /f /s /q \"static/unity\" && copy \"../matchmaker/Build/web/Build\" \"static/unity\"",
+    "simulation": "\"C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Unity.exe\" -batchmode -executeMethod BuildWebPlugin.Local -projectPath ../matchmaker && del /f /s /q \"static/unity\" && copy \"../matchmaker/Build/web/Build\" \"static/unity\"",
     "remote": "cross-env BACKEND_URI=wss://gpf-react.gameplumbers.com:8282 \"C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Unity.exe\" -batchmode -executeMethod BuildWebPlugin.Remote -projectPath ../matchmaker && del /f /s /q \"static/unity\" && copy \"../matchmaker/Build/web/Build\" \"static/unity\"",
     "server": "cross-env AWS_PROFILE=lil STACK_NAME=gpf-react AWS_REGION=us-west-2 DOMAIN_NAME=gameplumbers.com SUBDOMAIN=gpf-react CERT_ARN=arn:aws:acm:us-west-2:525665374615:certificate/5d0d5e32-cc7c-4f13-9406-880c4674f3d8 HOSTED_ZONE_ID=Z0546205385NZNV5ZUZ65 API_KEY=YMGZC89555B4HZ68ZHHFU4V4W2 \"C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Unity.exe\" -batchmode -executeMethod DeployBackend.Deploy -projectPath ../matchmaker -logfile log.txt",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"

@@ -39,7 +39,9 @@ public class GpfReactShim : MonoBehaviour
                     continue;
 
                 if (typeof(ServerObjectMessage).IsAssignableFrom(t))
+                {
                     messageTypes[t.FullName] = t;
+                }
             }
         }
         Application.targetFrameRate = 30;

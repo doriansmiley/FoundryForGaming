@@ -22,6 +22,8 @@ namespace ServerObjects
 
         public string Resolution = GetDeviceResolution();
 
+        public string Screen = "";
+
         public DateTime timestamp { get; set; }
 
         static string GetDeviceId()
