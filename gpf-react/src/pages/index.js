@@ -7,12 +7,15 @@ import { Load, Sync, Unsync, Send } from "./unity"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import * as types from "./appActionTypes"
 
 function delay(time) {
   return new Promise(resolve => setTimeout(resolve, time))
 }
-Load(store)
+
+Load(so => {
+  console.log(so.ID.id)
+  store.dispatch({ type: "SET_SO_STATE", so: so })
+})
 Sync("analytics/test_counter")
 Send("analytics/test_counter", "AnalyticsUserSO+Message", {})
 Send("analytics/test_counter", "AnalyticsUserSO+Message", {})

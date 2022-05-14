@@ -4,9 +4,14 @@ window.gpfReact.loading.promise = new Promise((resolve, reject) => {
   window.gpfReact.loading.reject = reject
   window.gpfReact.loading.resolve = resolve
 })
-export function Load(reduxStore) {
-  // HACK: Make reduce available to Unity
-  window.reduxStore = reduxStore
+window.gpfReact.onSOSync = soJson => {
+  console.log(soJson)
+  let so = JSON.parse(soJson)
+  window.gpfReact.soListener(so)
+}
+window.gpfReact.soListener = so => {}
+export function Load(soListener) {
+  window.gpfReact.soListener = soListener
   var buildUrl = "unity"
   var loaderUrl = buildUrl + "/web.loader.js"
   var config = {
