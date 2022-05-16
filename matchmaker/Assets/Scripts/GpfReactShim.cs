@@ -47,17 +47,6 @@ public class GpfReactShim : MonoBehaviour
         Application.targetFrameRate = 30;
     }
 
-    private void Start()
-    {
-        Invoke(nameof(this.TestSync), 5);
-    }
-
-    void TestSync()
-    {
-        var soid = Registry.GetId<MatchPlayerSO>();
-        Sync(soid);
-    }
-
     public void OnReactMessage(string react2UnityMessageJson)
     {
         var react2UnityMessage = JsonConvert.DeserializeObject<React2UnityMessage>(react2UnityMessageJson);

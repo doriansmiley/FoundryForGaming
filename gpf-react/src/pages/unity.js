@@ -5,7 +5,6 @@ window.gpfReact.loading.promise = new Promise((resolve, reject) => {
   window.gpfReact.loading.resolve = resolve
 })
 window.gpfReact.onSOSync = soJson => {
-  console.log(soJson)
   let so = JSON.parse(soJson)
   window.gpfReact.soListener(so)
 }

@@ -12,7 +12,6 @@ export async function Load(appId, userId, abTestListener) {
   window.gpfReact.userSoid = "analytics/" + userId
   window.gpfReact.abtestSoid = "ab_tests/" + appId
   await Unity.Load(so => {
-    console.log(so.ID.id)
     if (so.ID.id === window.gpfReact.abtestSoid) abTestListener(so.Tests)
   })
     .then(() => {
