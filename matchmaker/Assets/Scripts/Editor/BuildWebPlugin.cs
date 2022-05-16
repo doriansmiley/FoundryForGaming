@@ -4,45 +4,52 @@ using UnityEditor;
 using UnityEngine;
 using System;
 using UnityEditor.Callbacks;
+using System.IO;
 
 public static class BuildWebPlugin
 {
+    const string buildPath = "Build/web";
+    const string localPath = "../gpf-react/gpf-libs/local";
+    const string remotePath = "../gpf-react/gpf-libs/remote";
+
     [MenuItem("BUILD/Local")]
     static void Local()
     {
-        try
-        {
-            var userSettings = GPFSettings.userSettings;
-
-            var uri = System.Environment.GetEnvironmentVariable("BACKEND_URI");
-
-            userSettings.deployEnv.backendType = DeployEnv.BACKEND_TYPE.SIMULATED;
-
-            string[] scenes = { "Assets/React.unity" };
-            var report = BuildPipeline.BuildPlayer(scenes, "Build/web", BuildTarget.WebGL, BuildOptions.None);
-        }
-        catch (Exception e)
-        {
-            Debug.LogException(e);
-            if (Application.isBatchMode)
-                EditorApplication.Exit(1);
-        }
+        Build(DeployEnv.BACKEND_TYPE.SIMULATED, localPath);
     }
 
     [MenuItem("BUILD/Remote")]
     static void Remote()
     {
+        Build(DeployEnv.BACKEND_TYPE.CUSTOM_URL, remotePath);
+    }
+
+    static void Build(DeployEnv.BACKEND_TYPE backend, string outputDirectory)
+    {
         try
         {
             var userSettings = GPFSettings.userSettings;
 
             var uri = System.Environment.GetEnvironmentVariable("BACKEND_URI");
 
-            userSettings.deployEnv.backendType = DeployEnv.BACKEND_TYPE.CUSTOM_URL;
+            userSettings.deployEnv.backendType = backend;
             userSettings.deployEnv.CustomURI = uri;
 
             string[] scenes = { "Assets/React.unity" };
-            var report = BuildPipeline.BuildPlayer(scenes, "Build/web", BuildTarget.WebGL, BuildOptions.None);
+            var report = BuildPipeline.BuildPlayer(scenes, buildPath, BuildTarget.WebGL, BuildOptions.None);
+
+            if (report.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded)
+            {
+                throw new Exception("BuildPlayer failure: " + report.summary);
+            }
+
+            if (!Directory.Exists(outputDirectory))
+                Directory.CreateDirectory(outputDirectory);
+
+            if (Directory.Exists(outputDirectory))
+                Directory.Delete(outputDirectory, true);
+
+            Directory.Move($"{buildPath}/Build", outputDirectory);
         }
         catch (Exception e)
         {
