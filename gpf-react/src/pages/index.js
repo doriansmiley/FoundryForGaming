@@ -2,7 +2,7 @@ import * as React from "react"
 import { Link, graphql } from "gatsby"
 import { Provider } from "react-redux"
 import store from "./store"
-import { Load, SendAnalytics } from "./unity"
+import { Load, RemoveTest, SendAnalytics, SetTest } from "./analyticsWrapper"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -10,15 +10,16 @@ import Seo from "../components/seo"
 
 let appId = "main"
 let userId = Math.floor(Math.random() * 100000000) + "-" + Date.now()
-Load(
-  so => {
-    console.log(so.ID.id)
-    store.dispatch({ type: "SET_SO_STATE", so: so })
-  },
-  appId,
-  userId
-)
+Load(appId, userId, test => {
+  console.log(test)
+})
 SendAnalytics({ action: "test action" })
+SetTest("test1", "A")
+SetTest("test1", "B")
+SetTest("test1", "C")
+SetTest("test2", "test")
+SetTest("test3", "deleteMe")
+RemoveTest("test3")
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
