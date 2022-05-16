@@ -2,23 +2,23 @@ import * as React from "react"
 import { Link, graphql } from "gatsby"
 import { Provider } from "react-redux"
 import store from "./store"
-import { Load, Sync, Unsync, Send } from "./unity"
+import { Load, SendAnalytics } from "./unity"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
-function delay(time) {
-  return new Promise(resolve => setTimeout(resolve, time))
-}
-
-Load(so => {
-  console.log(so.ID.id)
-  store.dispatch({ type: "SET_SO_STATE", so: so })
-})
-Sync("analytics/test_counter")
-Send("analytics/test_counter", "AnalyticsUserSO+Message", {})
-Send("analytics/test_counter", "AnalyticsUserSO+Message", {})
+let appId = "main"
+let userId = Math.floor(Math.random() * 100000000) + "-" + Date.now()
+Load(
+  so => {
+    console.log(so.ID.id)
+    store.dispatch({ type: "SET_SO_STATE", so: so })
+  },
+  appId,
+  userId
+)
+SendAnalytics({ action: "test action" })
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`

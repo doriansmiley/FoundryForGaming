@@ -1,5 +1,7 @@
 window.gpfReact = {}
 window.gpfReact.loading = {}
+window.gpfReact.userId = "user"
+window.gpfReact.appId = "main"
 window.gpfReact.loading.promise = new Promise((resolve, reject) => {
   window.gpfReact.loading.reject = reject
   window.gpfReact.loading.resolve = resolve
@@ -10,7 +12,7 @@ window.gpfReact.onSOSync = soJson => {
   window.gpfReact.soListener(so)
 }
 window.gpfReact.soListener = so => {}
-export function Load(soListener) {
+export function Load(soListener, appId, userId) {
   window.gpfReact.soListener = soListener
   var buildUrl = "unity"
   var loaderUrl = buildUrl + "/web.loader.js"
@@ -65,6 +67,11 @@ export function Load(soListener) {
           let jsonMsg = JSON.stringify(message)
           unityInstance.SendMessage("GPFShim", "OnReactMessage", jsonMsg)
         }
+        window.gpfReact.appId = appId
+        window.gpfReact.userId = userId
+        Sync("ab_tests/" + window.gpfReact.appId)
+        Sync("analytics/" + window.gpfReact.userId)
+
         window.gpfReact.loading.resolve()
       })
       .catch(message => {
@@ -92,5 +99,13 @@ export function Send(soid, type, message) {
   let json = JSON.stringify(message)
   window.gpfReact.loading.promise.then(() => {
     window.gpfReact.Send(soid, type, json)
+  })
+}
+
+export function SendAnalytics(evtAttributes) {
+  window.gpfReact.loading.promise.then(() => {
+    Send("analytics/" + window.gpfReact.userId, "AnalyticsUserSO+Message", {
+      evtAttributes,
+    })
   })
 }

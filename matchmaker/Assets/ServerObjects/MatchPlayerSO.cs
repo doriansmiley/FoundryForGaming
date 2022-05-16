@@ -6,7 +6,7 @@ namespace ServerObjects
     [DataStorePath("sync.match_players")]
     [Syncable]
     [Register("match_player")]
-    public class MatchPlayerSO : AnalyticsSO
+    public class MatchPlayerSO : MatchAnalyticsSO
     {
         public enum State
         {

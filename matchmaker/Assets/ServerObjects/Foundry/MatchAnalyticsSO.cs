@@ -7,31 +7,9 @@ using System.Threading.Tasks;
 
 namespace ServerObjects
 {
-    public abstract class AnalyticsSO : ServerObject
+    public abstract class MatchAnalyticsSO : ServerObject
     {
-        public const string URL = "https://bright-app-v2ivb.cloud.serverless.com/events";
         static TimeSpan SessionTimeout = TimeSpan.FromMinutes(5);
-
-        class Event
-        {
-            public const string SchemaVersion = "0.0.01";
-
-            public string uid;
-            public string ts;
-            public string sessionId;
-            public string deviceID;
-            public string platform;
-            public string version = SchemaVersion;
-            public string language;
-            public string device;
-            public string resolution;
-            public Dictionary<string, object> evtAttributes = new Dictionary<string, object>();
-        }
-
-        class ServerMessage
-        {
-            public List<Event> events = new List<Event>();
-        }
 
         // TODO: Wrap fields in a subclass so they don't clutter the SO
         public int CurrentSession;
@@ -57,56 +35,14 @@ namespace ServerObjects
 
         async Task SendAnalytics(AnalyticsMessage message, Dictionary<string, object> state, string sessionId)
         {
-            var uid = $"{PublicID}-{UpdateOrder}";
             var evtAttributes = GetMessageFields(message);
-            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            var secondsSinceEpoch = Convert.ToInt64((message.timestamp - epoch).TotalMilliseconds);
-            var e = new Event
-            {
-                uid = uid,
-                ts = secondsSinceEpoch.ToString(),
-                sessionId = sessionId,
-                deviceID = message.DeviceId,
-                platform = message.Platform,
-                language = message.Language,
-                device = message.DeviceName,
-                resolution = message.Resolution,
-            };
             foreach (var kvp in state)
             {
                 if (!evtAttributes.ContainsKey(kvp.Key))
                     evtAttributes[kvp.Key] = kvp.Value;
             }
-            e.evtAttributes = evtAttributes;
-            var serverMessage = new ServerMessage();
-            serverMessage.events.Add(e);
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(serverMessage);
-            
-            if (Env[ServerObjectEnv.Included.BACKEND] == "Simulation")
-            {
-                Logger.Log("Event: " + json);
-            }
-            else
-                await SendRequest(json);
-        }
 
-        async Task SendRequest(string json)
-        {
-            var uri = new Uri(URL);
-
-            HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, uri);
-            message.Headers.Add("Accept", "application/json");
-
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            message.Content = data;
-
-            HttpResponseMessage response;
-            using (var client = new HttpClient())
-            {
-                response = await client.SendAsync(message);
-            }
-
-            response.EnsureSuccessStatusCode();
+            await Foundry.SendAnalytics(message, evtAttributes, sessionId, PublicID, UpdateOrder, Env, Logger);
         }
 
         Dictionary<string, object> GetMessageFields(AnalyticsMessage message)
