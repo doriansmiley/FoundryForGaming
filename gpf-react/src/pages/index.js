@@ -9,11 +9,12 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 
 let appId = "main"
-let userId = Math.floor(Math.random() * 100000000) + "-" + Date.now()
+let userId =
+  appId + "-" + Math.floor(Math.random() * 100000000) + "-" + Date.now()
 Load(appId, userId, test => {
   console.log(test)
 })
-SendAnalytics({ action: "test action" })
+//SendAnalytics({ action: "test action" })
 SetTest("test1", "A")
 SetTest("test1", "B")
 SetTest("test1", "C")

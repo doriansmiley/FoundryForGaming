@@ -11,18 +11,6 @@ public static class DeployBackend
         DeployFromEnv();
     }
 
-    [MenuItem("BUILD/Deploy")]
-    static void DeployFromEditor()
-    {
-        DeployInternal("gpf-react",
-            "us-west-2",
-            "YMGZC89555B4HZ68ZHHFU4V4W2",
-            "gameplumbers.com",
-            "gpf-react",
-            "arn:aws:acm:us-west-2:525665374615:certificate/5d0d5e32-cc7c-4f13-9406-880c4674f3d8",
-            "Z0546205385NZNV5ZUZ65");
-    }
-
     static void DeployFromEnv()
     {
         var stackName = System.Environment.GetEnvironmentVariable("STACK_NAME");

@@ -15,22 +15,27 @@ public static class BuildWebPlugin
     [MenuItem("BUILD/Local")]
     static void Local()
     {
-        Build(DeployEnv.BACKEND_TYPE.SIMULATED, localPath);
+        Build(DeployEnv.BACKEND_TYPE.SIMULATED, localPath, "");
     }
 
     [MenuItem("BUILD/Remote")]
-    static void Remote()
+    static void RemoteFromEditor()
     {
-        Build(DeployEnv.BACKEND_TYPE.CUSTOM_URL, remotePath);
+        Build(DeployEnv.BACKEND_TYPE.CUSTOM_URL, remotePath, "wss://gpf-react.gameplumbers.com:8282");
     }
 
-    static void Build(DeployEnv.BACKEND_TYPE backend, string outputDirectory)
+    static void Remote()
+    {
+        var uri = System.Environment.GetEnvironmentVariable("BACKEND_URI");
+
+        Build(DeployEnv.BACKEND_TYPE.CUSTOM_URL, remotePath, uri);
+    }
+
+    static void Build(DeployEnv.BACKEND_TYPE backend, string outputDirectory, string uri)
     {
         try
         {
             var userSettings = GPFSettings.userSettings;
-
-            var uri = System.Environment.GetEnvironmentVariable("BACKEND_URI");
 
             userSettings.deployEnv.backendType = backend;
             userSettings.deployEnv.CustomURI = uri;
