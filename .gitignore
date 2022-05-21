@@ -2,6 +2,11 @@
 **/node_modules
 **/static
 
+# WASM libs
+apps/planets/public/unity
+
+tmp
+
 # logs
 **/npm-debug.log*
 **/yarn-debug.log*

@@ -1,4 +1,4 @@
-import {curry} from 'ramda';
+import { curry } from 'ramda';
 
 export type Factory = <Config, T>(key: string) => (config: Config) => T;
 

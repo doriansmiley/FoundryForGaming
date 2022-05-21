@@ -4,7 +4,7 @@
     "defaultBase": "main"
   },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nrwl/next"
   },
   "generators": {
     "@nrwl/react": {
@@ -48,5 +48,6 @@
         "projects": "dependencies"
       }
     ]
-  }
+  },
+  "defaultProject": "planets"
 }

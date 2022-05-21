@@ -7,7 +7,7 @@ export function useInit() {
   // add your custom init or override the init sequence
   // for example:
   /*
-    * const ref = setUpRefs(); // from core
+    * const ref = setUpRefs(); // from './planets-module'
       setUpMediators({ref}); // new function defined here
       return {ref};
     * */
