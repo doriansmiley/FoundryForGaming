@@ -12,6 +12,7 @@ import {
 import { useEffect } from 'react';
 
 export function Index() {
+  // note the empty deps array, this ensure this function is only called once
   useEffect(() => {
     const appId = 'main';
     const userId =
@@ -30,7 +31,7 @@ export function Index() {
       .catch((e) => {
         console.log(e);
       });
-  });
+  }, []);
   const Planets = useInjection<() => React.ComponentType>(PLANETS_MODULE)();
   // if we are in a pending state planets will be false
   if (!Planets) {
