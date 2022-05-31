@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "compilerOptions": {
+    "lib": ["Es6"]
+  },
+  "references": [
+    {
+      "path": "./tsconfig.tools.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

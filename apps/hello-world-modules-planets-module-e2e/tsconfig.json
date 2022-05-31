@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "isolatedModules": false,
+    "types": ["cypress", "node", "@testing-library/cypress"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.js"]
+}
