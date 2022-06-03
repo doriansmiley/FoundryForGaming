@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { factory as variantFactory } from '@foundry-for-gaming/common';
+import { default as variantFactory } from './factory';
 import { MutableRefObject } from 'react';
 
 export type ExperimentFactory = <T>(

@@ -21,8 +21,6 @@ export function Index() {
       .then((result) => {
         console.log(`result: ${result}`);
         SendAnalytics({ action: 'test action' });
-        SetTest('test1', 'A');
-        SetTest('test1', 'B');
         SetTest('test1', 'C');
         SetTest('test2', 'test');
         SetTest('test3', 'deleteMe');
