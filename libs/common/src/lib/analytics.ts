@@ -6,14 +6,12 @@ export async function init(
   userId: string,
   buildUrl = 'unity',
   abTestListener: (tests: any) => void = () =>
-    console.log('abTestListener called')
+    console.log('abTestListener called'),
+  soListener: (value: JSONObject) => void
 ) {
   try {
     console.log(`loading unity: ${new Date().getTime()}`);
-    await Unity.Load(appId, userId, buildUrl, abTestListener, (so) => {
-      if (so.ID?.id === globalThis.gpfReact.abtestSoid)
-        abTestListener(so.Tests);
-    });
+    await Unity.Load(appId, userId, buildUrl, abTestListener, soListener);
     console.log(`loading unity: ${new Date().getTime()}`);
   } catch (e) {
     console.error(e);

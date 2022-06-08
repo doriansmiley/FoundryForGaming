@@ -41,7 +41,7 @@ export async function Load(
   appId: string,
   userId: string,
   buildUrl: string,
-  abTestListener: (tests: any) => void,
+  abTestListener: (value: JSONObject) => void,
   soListener: (value: JSONObject) => void
 ) {
   return new Promise((resolve, reject) => {
@@ -71,9 +71,7 @@ export async function Load(
         console.log(e);
       }
     };
-    if (globalThis.gpfReact?.soListener) {
-      globalThis.gpfReact.soListener = soListener;
-    }
+    globalThis.gpfReact.soListener = soListener;
 
     const loaderUrl = buildUrl + '/web.loader.js';
     const config = {

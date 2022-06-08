@@ -4,6 +4,7 @@ import { PLANETS_MODULE } from '../ioc';
 import styles from './index.module.scss';
 import {
   init,
+  JSONObject,
   RemoveTest,
   SendAnalytics,
   SetTest,
@@ -12,6 +13,25 @@ import {
 import { useEffect } from 'react';
 
 export function Index() {
+  function onSync(value: JSONObject) {
+    // this global dync function requires introspection if the value to determine
+    // what object was updates. Future version of sync will allow you to pass the
+    // function as a param. globalThis.gpfReact?.userSoid and globalThis.gpfReact.abtestSoid
+    // hold the ID value for analytics and A/B test objects respectively
+    const id = value.ID.id;
+    switch (id) {
+      case globalThis.gpfReact.abtestSoid:
+      case globalThis.gpfReact?.userSoid:
+        console.log(`Index.onSync: ${JSON.stringify(value)}`);
+        break;
+      default:
+        console.log(`Index.onSync: no matching object found for id: ${id}`);
+    }
+  }
+
+  function onABTest(value: JSONObject) {
+    console.log(`Index.onABTest: ${JSON.stringify(value)}`);
+  }
   // note the empty deps array, this ensure this function is only called once
   useEffect(() => {
     const appId = 'main';
@@ -20,7 +40,7 @@ export function Index() {
     // TODO pass in abTestListener and soListener and show updated on screen
     // when the new leaderboard SO is created hook up and show adding a new score
     // and show the scores changing in real time as the result of game play
-    init(appId, userId)
+    init(appId, userId, 'unity', onABTest, onSync)
       .then((result) => {
         console.log(`result: ${result}`);
         SendAnalytics({ action: 'test action' });
