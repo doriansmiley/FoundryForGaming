@@ -2,6 +2,9 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { PlanetsModule } from './planets-module';
 import { PlanetsModule as PlanetsModule2 } from './planets-module2.0';
+// TODO fix me
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { StorybookProviders } from '@foundry-for-gaming/e2e-testing-providers';
 
 storiesOf('PlanetsModule', module)

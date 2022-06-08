@@ -80,6 +80,7 @@
   },
   "dependencies": {
     "@nrwl/next": "14.0.5",
+    "@types/ramda": "^0.28.14",
     "brainly-style-guide": "^214.0.0-beta.2",
     "core-js": "^3.6.5",
     "inversify": "^6.0.1",

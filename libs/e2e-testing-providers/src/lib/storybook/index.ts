@@ -1,1 +1,1 @@
-export {StorybookProviders} from './decorators/StorybookProviders';
+export * from './decorators/StorybookProviders';

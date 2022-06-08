@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Provider} from '@foundry-for-gaming/common';
+import { Provider } from '@foundry-for-gaming/common';
 
 import styles from './StorybookProviders.module.css';
-import {useServiceClientsContainer} from '../../ioc';
-import {Container, interfaces} from 'inversify';
+import { useServiceClientsContainer } from '../../ioc';
+import { Container, interfaces } from 'inversify';
 
 export function StorybookProviders({
   children,
@@ -14,11 +14,13 @@ export function StorybookProviders({
 }) {
   const serviceClientsContainer = useServiceClientsContainer();
 
-  const storybookContainer = additionalContainers ? Container.merge(
-    serviceClientsContainer,
-    new Container(), // placeholder, required parameter
-    ...additionalContainers
-  ) : serviceClientsContainer;
+  const storybookContainer = additionalContainers
+    ? Container.merge(
+        serviceClientsContainer,
+        new Container(), // placeholder, required parameter
+        ...additionalContainers
+      )
+    : serviceClientsContainer;
 
   return (
     <Provider container={storybookContainer}>
@@ -26,5 +28,3 @@ export function StorybookProviders({
     </Provider>
   );
 }
-
-export default StorybookProviders;
