@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
+    "start-native": "nx serve native-es-modules --port 3200",
     "build": "nx build",
     "test": "nx test",
     "storybook": "start-storybook -p 6006",
@@ -84,6 +85,7 @@
     "brainly-style-guide": "^214.0.0-beta.2",
     "core-js": "^3.6.5",
     "inversify": "^6.0.1",
+    "lotusjs-components": "^3.1.2",
     "next": "12.1.5",
     "ramda": "^0.28.0",
     "react": "^18.1.0",

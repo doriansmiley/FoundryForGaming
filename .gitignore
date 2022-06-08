@@ -4,6 +4,7 @@
 
 # WASM libs
 apps/planets/public/unity
+**/unity/
 
 tmp
 

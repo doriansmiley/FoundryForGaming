@@ -1,0 +1,28 @@
+{
+  "root": "apps/native-es-modules-e2e",
+  "sourceRoot": "apps/native-es-modules-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/native-es-modules-e2e/cypress.json",
+        "devServerTarget": "native-es-modules:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "native-es-modules:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/native-es-modules-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["native-es-modules"]
+}
