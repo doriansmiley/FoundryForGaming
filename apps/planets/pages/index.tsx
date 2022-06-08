@@ -17,6 +17,9 @@ export function Index() {
     const appId = 'main';
     const userId =
       appId + '-' + Math.floor(Math.random() * 100000000) + '-' + Date.now();
+    // TODO pass in abTestListener and soListener and show updated on screen
+    // when the new leaderboard SO is created hook up and show adding a new score
+    // and show the scores changing in real time as the result of game play
     init(appId, userId)
       .then((result) => {
         console.log(`result: ${result}`);

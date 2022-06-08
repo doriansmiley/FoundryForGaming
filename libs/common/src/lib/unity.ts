@@ -57,6 +57,7 @@ export async function Load(
     window.gpfReact.userSoid = 'analytics/' + userId;
     window.gpfReact.abtestSoid = 'ab_tests/' + appId;
 
+    // TODO refactor to call soListener, remove window.gpfReact?.soListener?
     window.gpfReact.onSOSync = (soJson) => {
       try {
         window.gpfReact?.soListener?.(JSON.parse(soJson));
