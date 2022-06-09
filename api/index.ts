@@ -1,9 +1,14 @@
-import {api, data} from '@serverless/cloud';
+import {api, data, params} from '@serverless/cloud';
+import S3 from 'aws-sdk/clients/s3';
 
 import {v4 as uuidv4} from 'uuid';
 import {GeoJSON, Point} from 'geojson';
 
 const cached = new Map();
+const s3 = new S3({credentials: {
+    accessKeyId: params.AWS_ACCESS_KEY_ID,
+    secretAccessKey: params.AWS_SECRET_ACCESS_KEY,
+  }});
 
 type Optional<T> = T | undefined;
 
@@ -102,12 +107,20 @@ api.get('/next/:id', async (req, res) => {
 });
 
 api.post('/events', async (req, res) => {
+  const date = new Date();
+  const id = uuidv4();
   const events: Array<Event> = req.body.events;
   const promises = [];
   events.forEach((event) => {
     promises.push(data.set(`events:${event.ts}`, event));
   });
   await Promise.all(promises);
+  const params = {
+    Body: JSON.stringify(events),
+    Bucket: 'foundry-for-gaming',
+    Key: `${date.getUTCDay()}/${date.getUTCHours()}/${id}.json`
+  };
+  await s3.putObject(params).promise();
   res.send('Event added');
 });
 
