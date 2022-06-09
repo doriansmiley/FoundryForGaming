@@ -118,7 +118,7 @@ api.post('/events', async (req, res) => {
   const params = {
     Body: JSON.stringify(events),
     Bucket: 'foundry-for-gaming',
-    Key: `${date.getUTCDay()}/${date.getUTCHours()}/${id}.json`
+    Key: `${date.getUTCFullYear()}/${date.getUTCMonth()}/${date.getUTCDate()}/${date.getUTCHours()}/${id}.json`
   };
   await s3.putObject(params).promise();
   res.send('Event added');
