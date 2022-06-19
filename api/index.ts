@@ -115,6 +115,9 @@ api.post('/events', async (req, res) => {
     promises.push(data.set(`events:${event.ts}`, event));
   });
   await Promise.all(promises);
+  // TODO add support for multi tenancy. Store retrieved keypairs in memory
+  // to fetch a keypair not in memory use parameter store
+  // create automation to insert client keys into parameter store as part of this API
   const s3Params = {
     Body: JSON.stringify(events),
     Bucket: params.BUCKET_NAME || 'foundry-for-gaming',
