@@ -1,5 +1,3 @@
-mod utils;
-
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use web_sys::{ErrorEvent, MessageEvent, WebSocket};
@@ -53,8 +51,6 @@ pub fn subscribe(callback: js_sys::Function) {
     GLOBAL_WS.with(|ws| {
         let WS = ws.borrow();
         let this = JsValue::null();
-        // create callback
-    let cloned_ws = WS.clone();
     let onmessage_callback = Closure::wrap(Box::new(move |e: MessageEvent| {
         // Handle difference Text/Binary,...
         if let Ok(abuf) = e.data().dyn_into::<js_sys::ArrayBuffer>() {
