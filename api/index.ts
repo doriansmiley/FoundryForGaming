@@ -28,43 +28,99 @@ type GetResponse<T> = Optional<
   | T
 >;
 
-type Actor = {
-  type: string;
+// the user type
+export enum Actor {
+  ANONYMOUS ='anonymous',
+  REGISTERED_USER ='registeredUser',
+  POWER_USER ='powerUser',
+  ADMIN ='admin',
+  SUPER_ADMIN ='superAdmin',
 };
 
-type Location = {
-  point: Point;
-};
-
-type Activity = {
-  type: string;
+export enum Activities {
+  REGISTRATION ='registration',
+  LOGIN ='login',
+  SHOP ='shop',
+  CHECKOUT ='checkout',
+  PURCHASE ='purchase',
+  GAME_MATCH = 'gameMatch',
+  GAME_PLAY = 'gamePlay',
+  MESSAGING ='messaging',
+  UPLOAD ='upload',
+  DATA_STREAM ='dataStream',
 }
 
-type Experiment = {
+// activities include state machines and controllers that
+// can include experiments, ie registration, shop, checkout, etc
+export type Activity = {
+  type: Activities;
+  variant?: Experiment;
+}
+
+export type Experiment = {
   id: string;
   value: string;
 }
 
-type Event = {
+export type Demographics = {
+  age: number;
+  sex: 'm' | 'f';
+  // ISO 639-2
+  language: string;
+}
+
+export type Screen = {
+  width: number;
+  height: number;
+  fps: number;
+}
+
+export type Event = {
   uid: string;
   ts: number;
-  sessionId: string;
-  deviceID: string;
-  platform: string;
   version: string;
-  actor?: Actor;
-  location?: Location;
-  activity?: Activity;
+  sessionId?: string;
+  // OS
+  platform?: string;
+  // macbook, iPhone, etc
+  device?: string;
+  // browser version etc
+  // TODO add to data pipeline and SO
+  client?: string;
+  // unique ID of the device
+  deviceId?: string;
+  // User's IP address
+  // TODO add to data pipeline and SO
+  ip?: string;
+  // provided by geo-targeting services, ie CloudFlare, cloudFront ISO 3166
+  // TODO add to data pipeline and SO
+  countryName?: string;
+  // TODO add to data pipeline and SO
+  demographics?: Demographics;
+  actor: Actor;
+  // provided by geo-targeting services, ie CloudFlare, cloudFront
+  // TODO add to data pipeline and SO
+  location?: Point;
   evtAttributes: {
+    // the web page or app screen
     screen?: string;
+    // the ID of the element that triggered the interaction
     element?: string;
+    // the label displayed to the user
     label?: string;
-    interaction?: string;
+    // the type of interaction ie click, touch, scroll, etc or generic event like load, unload etc
     type: string;
-    value?: number;
-    experiment?: Experiment;
+    // TODO add to data pipeline and SO
+    value?: string;
+    // variants represent different version of UI elements rendered as part of an experiment
+    // TODO add to data pipeline and SO
+    variant?: Experiment;
+    // TODO add to data pipeline and SO
+    activity?: Activity;
+    // TODO implement `${screen.width} x ${screen.height} @ ${fps}Hz`
+    // get the Hz using http://jsfiddle.net/rBGPk/
+    screenInfo?: Screen;
   };
-  session: number;
 };
 
 // Create GET route and return users
