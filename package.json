@@ -87,6 +87,7 @@
     "brainly-style-guide": "^214.0.0-beta.2",
     "commander": "^9.3.0",
     "core-js": "^3.6.5",
+    "flatbuffers": "^2.0.6",
     "inversify": "^6.0.1",
     "lotusjs-components": "^3.1.2",
     "next": "12.1.5",
