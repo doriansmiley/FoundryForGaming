@@ -7,6 +7,7 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <Deterministic>true</Deterministic>
     <Optimize>true</Optimize>
+    <Version>1.0.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MsgPack.Cli" Version="1.0.1" />
@@ -16,7 +17,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
     <PackageReference Include="dotAPNS" Version="4.2.0" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.3.17"/>
+    <PackageReference Include="AWSSDK.S3" Version="3.7.9.19" />
+    <PackageReference Include="AWSSDK.SecretsManager" Version="3.7.2.59" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="libGPFSharedCore">
