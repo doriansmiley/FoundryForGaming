@@ -25,3 +25,5 @@ tools/jest.config.js
 tools/tsconfig.spec.json
 tools/tsconfig.tools.json
 dist
+
+flatbuffers

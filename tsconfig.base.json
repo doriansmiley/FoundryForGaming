@@ -21,6 +21,9 @@
       "@foundry-for-gaming/e2e-testing-providers": [
         "libs/e2e-testing-providers/src/index.ts"
       ],
+      "@foundry-for-gaming/hello-world/modules/moster-module": [
+        "libs/hello-world/modules/moster-module/src/index.ts"
+      ],
       "@foundry-for-gaming/planets-module": [
         "libs/hello-world/modules/planets-module/src/index.ts"
       ]

@@ -1,0 +1,23 @@
+{
+  "root": "libs/hello-world/modules/moster-module",
+  "sourceRoot": "libs/hello-world/modules/moster-module/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/hello-world/modules/moster-module/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/hello-world/modules/moster-module"],
+      "options": {
+        "jestConfig": "libs/hello-world/modules/moster-module/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

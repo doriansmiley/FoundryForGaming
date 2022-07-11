@@ -54,7 +54,7 @@ export enum Activities {
 // can include experiments, ie registration, shop, checkout, etc
 export type Activity = {
   type: Activities;
-  variant?: Experiment;
+  experiment?: Experiment;
 }
 
 export type Experiment = {
@@ -78,6 +78,7 @@ export type Screen = {
 export type Event = {
   uid: string;
   ts: number;
+  appId: string;
   version: string;
   sessionId?: string;
   // OS
@@ -88,7 +89,7 @@ export type Event = {
   // TODO add to data pipeline and SO
   client?: string;
   // unique ID of the device
-  deviceId?: string;
+  deviceID?: string;
   // User's IP address
   // TODO add to data pipeline and SO
   ip?: string;

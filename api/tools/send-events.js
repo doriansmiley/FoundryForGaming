@@ -41,6 +41,7 @@ export default async (count) => {
         element: ['ButtonA','ButtonB','ButtonC'][random.int(0,2)],
         label: 'ButtonText',
         interaction: 'touch',
+        value: ['success','error','processing'][random.int(0,2)],
         variant: [
           {
             id: '884835770',
