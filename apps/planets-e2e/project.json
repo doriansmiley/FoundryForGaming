@@ -1,0 +1,28 @@
+{
+  "root": "apps/planets-e2e",
+  "sourceRoot": "apps/planets-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/planets-e2e/cypress.json",
+        "devServerTarget": "planets:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "planets:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/planets-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["planets"]
+}

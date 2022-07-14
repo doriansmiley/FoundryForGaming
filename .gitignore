@@ -1,6 +1,11 @@
 # dependencies
 **/node_modules
 
+# WASM libs
+apps/planets/public/unity
+
+tmp
+
 # logs
 **/npm-debug.log*
 **/yarn-debug.log*
@@ -10,3 +15,11 @@
 
 # macOS-specific files
 **/.DS_Store
+tools/eslint-rules
+tools/executors
+tools/generators
+tools/scripts
+tools/jest.config.js
+tools/tsconfig.spec.json
+tools/tsconfig.tools.json
+dist

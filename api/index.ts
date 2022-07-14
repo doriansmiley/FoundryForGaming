@@ -1,6 +1,7 @@
 import {api, data} from '@serverless/cloud';
 
 import {v4 as uuidv4} from 'uuid';
+import {GeoJSON, Point} from 'geojson';
 
 const cached = new Map();
 
@@ -21,6 +22,24 @@ type GetResponse<T> = Optional<
     }
   | T
 >;
+
+type Actor = {
+  type: string;
+};
+
+type Location = {
+  point: Point;
+};
+
+type Activity = {
+  type: string;
+}
+
+type Experiment = {
+  id: string;
+  value: string;
+}
+
 type Event = {
   uid: string;
   ts: number;
@@ -28,13 +47,17 @@ type Event = {
   deviceID: string;
   platform: string;
   version: string;
+  actor?: Actor;
+  location?: Location;
+  activity?: Activity;
   evtAttributes: {
     screen?: string;
     element?: string;
     label?: string;
     interaction?: string;
     type: string;
-    value?: number
+    value?: number;
+    experiment?: Experiment;
   };
   session: number;
 };

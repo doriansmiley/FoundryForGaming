@@ -15,15 +15,21 @@ namespace GPF.Build
             SearchAssemblies();
         }
 
+        private static void forceLoadGPFLib()
+        {
+            var t = typeof(ServerObject);
+        }
+
         static void SearchAssemblies()
         {
+            forceLoadGPFLib();
             var totalClassList = new List<Type>();
+        
             foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies())
-            {
                 totalClassList.AddRange(GetTypeList(a));
-            }
-
+        
             StringBuilder sb = new StringBuilder();
+        
             foreach (var t in totalClassList)
                 sb.AppendLine(t.FullName);
 

@@ -1,0 +1,56 @@
+{
+  "root": "libs/hello-world/modules/planets-module",
+  "sourceRoot": "libs/hello-world/modules/planets-module/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/hello-world/modules/planets-module/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/hello-world/modules/planets-module"],
+      "options": {
+        "jestConfig": "libs/hello-world/modules/planets-module/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "storybook": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "port": 4400,
+        "config": {
+          "configFolder": "libs/hello-world/modules/planets-module/.storybook"
+        },
+        "staticDir": [".storybook/assets"]
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nrwl/storybook:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "uiFramework": "@storybook/react",
+        "outputPath": "dist/storybook/hello-world-modules-planets-module",
+        "config": {
+          "configFolder": "libs/hello-world/modules/planets-module/.storybook"
+        },
+        "staticDir": [".storybook/assets"]
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    }
+  },
+  "tags": ["type:module"]
+}
