@@ -1,4 +1,4 @@
-﻿using GPF.ServerObjects;
+using GPF.ServerObjects;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
