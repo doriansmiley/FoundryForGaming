@@ -23,7 +23,7 @@
                 "Value": "%ENABLE_REST%"
             },
             "DockerImage": {
-                "Value": "public.ecr.aws/a9v5u2b1/gpf-server-base:2570"
+                "Value": "public.ecr.aws/a9v5u2b1/gpf-server-base:2571"
             },
             "Domain": {
                 "Value": "%DOMAIN%"
