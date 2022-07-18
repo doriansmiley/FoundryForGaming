@@ -4,9 +4,23 @@ window.gpfReact.loading.promise = new Promise((resolve, reject) => {
   window.gpfReact.loading.reject = reject
   window.gpfReact.loading.resolve = resolve
 })
+window.gpfReact.queries = {}
+window.gpfReact.queries.next = 0
+window.gpfReact.queries.inFlight = {}
 window.gpfReact.onSOSync = soJson => {
   let so = JSON.parse(soJson)
   window.gpfReact.soListener(so)
+}
+window.gpfReact.onQuerySuccess = (msgJson, queryId) => {
+  let msg = JSON.parse(msgJson)
+  var task = window.gpfReact.queries.inFlight[queryId]
+  delete window.gpfReact.queries.inFlight[queryId]
+  task.resolve(msg)
+}
+window.gpfReact.onQueryFailure = (reason, queryId) => {
+  var task = window.gpfReact.queries.inFlight[queryId]
+  delete window.gpfReact.queries.inFlight[queryId]
+  task.reject(reason)
 }
 window.gpfReact.soListener = so => {}
 export async function Load(soListener) {
@@ -65,6 +79,18 @@ export async function Load(soListener) {
           unityInstance.SendMessage("GPFShim", "OnReactMessage", jsonMsg)
         }
 
+        window.gpfReact.SendQuery = (soid, type, json, queryId) => {
+          let message = {
+            cmd: "SEND_QUERY",
+            soid,
+            msgType: type,
+            msgJson: json,
+            queryId: queryId,
+          }
+          let jsonMsg = JSON.stringify(message)
+          unityInstance.SendMessage("GPFShim", "OnReactMessage", jsonMsg)
+        }
+
         window.gpfReact.loading.resolve()
       })
       .catch(message => {
@@ -93,4 +119,16 @@ export function Send(soid, type, message) {
   window.gpfReact.loading.promise.then(() => {
     window.gpfReact.Send(soid, type, json)
   })
+}
+
+export async function SendQuery(soid, type, message) {
+  let json = JSON.stringify(message)
+  let queryId = window.gpfReact.queries.next++
+  let task = new Promise()
+  window.gpfReact.queries[queryId] = task
+  window.gpfReact.loading.promise.then(() => {
+    window.gpfReact.SendQuery(soid, type, json, queryId)
+  })
+  var result = await task
+  return result
 }
