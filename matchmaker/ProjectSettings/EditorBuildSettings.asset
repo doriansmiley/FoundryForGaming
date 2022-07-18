@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/React.unity
     guid: da2bf02d36ee3a94ba0bd9e99bef38cc
+  - enabled: 1
+    path: Assets/Coin.unity
+    guid: 20a698375ed944749804b17d3eb304fc
   m_configObjects: {}

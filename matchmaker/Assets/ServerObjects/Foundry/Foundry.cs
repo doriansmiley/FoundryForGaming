@@ -58,14 +58,16 @@ namespace ServerObjects
             var serverMessage = new ServerMessage();
             serverMessage.events.Add(e);
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(serverMessage);
-
+      /*
             if (Env[ServerObjectEnv.Included.BACKEND] == "Simulation")
             {
                 Logger.Log("Event: " + json);
             }
             else
                 await SendRequest(json);
-        }
+      */
+      Logger.Log("Event: " + json);
+    }
 
         static async Task SendRequest(string json)
         {

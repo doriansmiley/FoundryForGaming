@@ -4,13 +4,9 @@ using System.Collections.Generic;
 
 namespace ServerObjects
 {
-  [DataStorePath("sync.experiment")]
-  [Syncable]
-  [Register("experiment")]
-  public class ExperimentSO : ServerObject
+  [Register("experiment_rest")]
+  public class ExperimentRestSO : ServerObject
   {
-    public Dictionary<string, string> experiments = new Dictionary<string, string>();
-
     private static Dictionary<string, string> ParseNameVals(string queryString)
     {
       var myParams = new Dictionary<string, string>();
@@ -33,28 +29,39 @@ namespace ServerObjects
     public void Handler(RESTRequestMessage msg)
     {
       string reason = "bad path";
+      var experimentsSoid = Registry.GetId<ExperimentSO>(ID.Suffix);
 
       switch (msg.Uri.AbsolutePath)
       {
         case "/set":
           if (msg.Body.Contains("=") && !msg.Body.Contains("=="))
           {
-            experiments = ParseNameVals(msg.Body);
+            var experiments = ParseNameVals(msg.Body);
             Send(msg.evt.source, new RESTResponseMessage
             {
               Body = $"{experiments.Count} experiments set",
+            });
+            Send(experimentsSoid, new ExperimentSO.ChangeExperiments
+            {
+              experiments = experiments,
             });
             return;
           }
           reason = "bad body";
           break;
         case "/reset":
-          experiments = new Dictionary<string, string>();
-
-          Send(msg.evt.source, new RESTResponseMessage
           {
-            Body = "experiments reset",
-          });
+            var experiments = new Dictionary<string, string>();
+
+            Send(msg.evt.source, new RESTResponseMessage
+            {
+              Body = "experiments reset",
+            });
+            Send(experimentsSoid, new ExperimentSO.ChangeExperiments
+            {
+              experiments = experiments,
+            });
+          }
           return;
       }
 
