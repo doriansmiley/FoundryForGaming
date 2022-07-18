@@ -23,7 +23,7 @@ public class CoinLeaderboardSO : ServerObject
 
   public const double MAX_UPDATE_RATE = 0.3;
 
-  public Dictionary<string, LeaderboardRow> scores = new Dictionary<string, LeaderboardRow>();
+  public Dictionary<SOID<CoinPlayerSO>, LeaderboardRow> scores = new Dictionary<SOID<CoinPlayerSO>, LeaderboardRow>();
 
   public bool scoresChanged;
 
@@ -82,6 +82,22 @@ public class CoinLeaderboardSO : ServerObject
       scores.Remove(message.id);
     scoresChanged = true;
     SendScoresToView(message.timestamp);
+  }
+
+  public class GetEntries : ServerObjectMessage
+  {
+    public Dictionary<SOID<CoinPlayerSO>, LeaderboardRow> scores;
+  }
+  [MessageHook(HookSecurity.SHARED_WITH_CLIENT)]
+  static void InjectEntryInfo(GetEntries msg, HookContext context)
+  {
+    var me = context.Self as CoinLeaderboardSO;
+    msg.scores = me.scores;
+  }
+  [ClientSession]
+  void Handler(GetEntries message)
+  {
+    // We don't have to effect any state
   }
 
   void SendScoresToView(DateTime timestamp)

@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
 using GPF.ServerObjects;
-using ServerObjects;
 
 [DataStorePath("sync.coin_leaderboard_admin")]
 [Syncable]
 [Register("coin_leaderboard_admin")]
-public class CoinLeaderboardAdminSO : ServerObject
+public class CoinAdminSO : ServerObject
 {
   public class SetEntry : ServerObjectMessage
   {
