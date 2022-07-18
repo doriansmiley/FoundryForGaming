@@ -56,6 +56,7 @@ namespace REST
       {
         Headers = headers,
         Method = "POST",
+        Body = " ",
       };
       var goodResponse = await SendREST(goodRequest, "/reset");
 
