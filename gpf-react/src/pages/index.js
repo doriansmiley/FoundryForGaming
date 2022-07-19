@@ -2,7 +2,14 @@ import * as React from "react"
 import { Link, graphql } from "gatsby"
 import { Provider } from "react-redux"
 import store from "./store"
-import { Load, RemoveTest, SendAnalytics, SetTest } from "./analyticsWrapper"
+import {
+  Load,
+  RemoveTest,
+  SendAnalytics,
+  SetTest,
+  SetEntry,
+  GetLeaderboardEntries,
+} from "./analyticsWrapper"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -21,6 +28,18 @@ SetTest("test1", "C")
 SetTest("test2", "test")
 SetTest("test3", "deleteMe")
 RemoveTest("test3")
+
+function TestLeaderboard() {
+  SetEntry("coin_player/test_id_1", "Carrie", 2)
+  SetEntry("coin_player/test_id_2", "Gene", 4)
+  SetEntry("coin_player/test_id_3", "Kelly", 7)
+
+  setTimeout(async () => {
+    var entries = await GetLeaderboardEntries()
+    console.log(entries)
+  }, 5000)
+}
+TestLeaderboard()
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`

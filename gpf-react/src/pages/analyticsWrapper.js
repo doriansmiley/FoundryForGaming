@@ -73,7 +73,7 @@ export function RemoveEntry(id) {
 export async function GetLeaderboardEntries() {
   await window.gpfReact.analytics.promise
   return Unity.SendQuery(
-    window.gpfReact.coinAdminSoid,
+    "coin_leaderboard/main",
     "CoinLeaderboardSO+GetEntries",
     {}
   )

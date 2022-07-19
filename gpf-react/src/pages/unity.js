@@ -13,14 +13,14 @@ window.gpfReact.onSOSync = soJson => {
 }
 window.gpfReact.onQuerySuccess = (msgJson, queryId) => {
   let msg = JSON.parse(msgJson)
-  var task = window.gpfReact.queries.inFlight[queryId]
+  var query = window.gpfReact.queries.inFlight[queryId]
   delete window.gpfReact.queries.inFlight[queryId]
-  task.resolve(msg)
+  query.resolve(msg)
 }
 window.gpfReact.onQueryFailure = (reason, queryId) => {
-  var task = window.gpfReact.queries.inFlight[queryId]
+  var query = window.gpfReact.queries.inFlight[queryId]
   delete window.gpfReact.queries.inFlight[queryId]
-  task.reject(reason)
+  query.reject(reason)
 }
 window.gpfReact.soListener = so => {}
 export async function Load(soListener) {
@@ -123,9 +123,13 @@ export function Send(soid, type, message) {
 
 export async function SendQuery(soid, type, message) {
   let json = JSON.stringify(message)
-  let queryId = window.gpfReact.queries.next++
-  let task = new Promise()
-  window.gpfReact.queries[queryId] = task
+  let queryId = "" + window.gpfReact.queries.next++
+  let query = {}
+  let task = new Promise((resolve, reject) => {
+    query.resolve = resolve
+    query.reject = reject
+  })
+  window.gpfReact.queries.inFlight[queryId] = query
   window.gpfReact.loading.promise.then(() => {
     window.gpfReact.SendQuery(soid, type, json, queryId)
   })
