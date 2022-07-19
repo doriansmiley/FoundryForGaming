@@ -1,8 +1,8 @@
 using GPF.ServerObjects;
 
-[DataStorePath("sync.coin_leaderboard_admin")]
+[DataStorePath("sync.coin_admin")]
 [Syncable]
-[Register("coin_leaderboard_admin")]
+[Register("coin_admin")]
 public class CoinAdminSO : ServerObject
 {
   public class SetEntry : ServerObjectMessage

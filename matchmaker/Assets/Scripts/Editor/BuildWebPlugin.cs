@@ -1,4 +1,4 @@
-﻿using GPF;
+using GPF;
 using GPFEditor.Settings;
 using UnityEditor;
 using UnityEngine;
@@ -21,7 +21,7 @@ public static class BuildWebPlugin
     [MenuItem("BUILD/Remote")]
     static void RemoteFromEditor()
     {
-        Build(DeployEnv.BACKEND_TYPE.CUSTOM_URL, remotePath, "wss://gpf-react.gameplumbers.com:8282");
+        Build(DeployEnv.BACKEND_TYPE.CUSTOM_URL, remotePath, "wss://gpf-react-2.gameplumbers.com:8282");
     }
 
     static void Remote()
