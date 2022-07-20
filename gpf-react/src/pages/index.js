@@ -9,6 +9,7 @@ import {
   SetTest,
   SetEntry,
   GetLeaderboardEntries,
+  RemoveEntry,
 } from "./analyticsWrapper"
 
 import Bio from "../components/bio"
@@ -37,7 +38,17 @@ function TestLeaderboard() {
   setTimeout(async () => {
     var entries = await GetLeaderboardEntries()
     console.log(entries)
-  }, 5000)
+    setTimeout(async () => {
+      SetEntry("coin_player/test_id_1", "Carrie", 3)
+      SetEntry("coin_player/test_id_2", "Gene", 5)
+      SetEntry("coin_player/test_id_3", "Kelly", 8)
+      setTimeout(async () => {
+        RemoveEntry("coin_player/test_id_1")
+        RemoveEntry("coin_player/test_id_2")
+        RemoveEntry("coin_player/test_id_3")
+      }, 3000)
+    }, 3000)
+  }, 3000)
 }
 TestLeaderboard()
 
