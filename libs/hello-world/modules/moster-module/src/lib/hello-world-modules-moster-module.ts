@@ -14,10 +14,7 @@ export function monsterBuilder({
   const builder = new flatbuffers.Builder(1024);
   const buffers = weapons.map((weapon) => {
     const name = builder.createString(weapon.name);
-    Weapon.startWeapon(builder);
-    Weapon.addName(builder, name);
-    Weapon.addDamage(builder, weapon.damage);
-    return Weapon.endWeapon(builder);
+    return Weapon.createWeapon(builder, name, weapon.damage);
   });
   const weaponsVector = Monster.createWeaponsVector(builder, buffers);
   Monster.startMonster(builder);

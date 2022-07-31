@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "cloud",
-    "test": "cloud test"
+    "test": "cloud test",
+    "send-test-events": "node --experimental-fetch tools/index post-events 100"
   },
   "devDependencies": {
     "@serverless/cloud": "^2.10.0",
