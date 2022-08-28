@@ -8,6 +8,7 @@ import {
   RemoveTest,
   SendAnalytics,
   GetLeaderboardEntries,
+  SetEntry,
   SetTest,
   useInjection,
 } from '@foundry-for-gaming/common';
@@ -28,6 +29,7 @@ export function Index() {
         break;
       default:
         console.log(`Index.onSync: no matching object found for id: ${id}`);
+        console.log(`Index.onSync: value: ${JSON.stringify(value)}`);
     }
   }
 
@@ -50,6 +52,7 @@ export function Index() {
         SetTest('test2', 'test');
         SetTest('test3', 'deleteMe');
         GetLeaderboardEntries();
+        SetEntry(userId, 'dsmiley', 10);
         RemoveTest('test3');
       })
       .catch((e) => {

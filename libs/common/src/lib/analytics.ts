@@ -1,5 +1,5 @@
 import * as Unity from './unity';
-import { JSONObject } from './unity';
+import { JSONObject, SendQuery } from './unity';
 
 export async function init(
   appId: string,
@@ -26,7 +26,7 @@ export async function init(
     Unity.Sync(globalThis.gpfReact.userSoid);
   }
   if (globalThis.gpfReact.coinAdminSoid) {
-    console.log('calling Unity.Sync userSoid');
+    console.log('calling Unity.Sync coinAdminSoid');
     Unity.Sync(globalThis.gpfReact.coinAdminSoid);
   }
   console.log('returning done');
@@ -65,6 +65,9 @@ export function RemoveTest(testName: string) {
 
 export function SetEntry(id, username, score) {
   if (globalThis.gpfReact.coinAdminSoid) {
+    console.log(
+      `Unity.Send SetEntry: id: ${id} username: ${username} score: ${score}`
+    );
     Unity.Send(globalThis.gpfReact.coinAdminSoid, 'CoinAdminSO+SetEntry', {
       id,
       username,
@@ -83,9 +86,11 @@ export function RemoveEntry(id) {
 
 export async function GetLeaderboardEntries() {
   if (globalThis.gpfReact.coinAdminSoid) {
-    console.log(`Unity.Send getting leaderboard`);
-    Unity.Send(
-      globalThis.gpfReact.coinAdminSoid,
+    console.log(
+      `Unity.Send getting leaderboard: ${globalThis.gpfReact.coinLeaderBoardSoid}`
+    );
+    Unity.SendQuery(
+      globalThis.gpfReact.coinLeaderBoardSoid,
       'CoinLeaderboardSO+GetEntries',
       {}
     );

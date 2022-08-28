@@ -14,12 +14,16 @@ export type gpfReact = {
   appId: string | undefined;
   userSoid: string | undefined;
   coinAdminSoid: string | undefined;
+  coinLeaderBoardSoid: string | undefined;
   abtestSoid: string | undefined;
   onSOSync: ((json: string) => void) | undefined;
   soListener: ((json: JSONObject) => void) | undefined;
   Sync: ((json: string) => void) | undefined;
   Unsync: ((json: JSONObject) => void) | undefined;
   Send: ((soid: string, type: string, json: string) => void) | undefined;
+  SendQuery:
+    | ((soid: string, type: string, json: string, queryId: string) => void)
+    | undefined;
 };
 
 declare global {
@@ -50,12 +54,14 @@ export async function Load(
       userSoid: undefined,
       abtestSoid: undefined,
       coinAdminSoid: undefined,
+      coinLeaderBoardSoid: undefined,
       userId: undefined,
       appId: undefined,
       onSOSync: undefined,
       soListener: undefined,
       Send: undefined,
       Sync: undefined,
+      SendQuery: undefined,
       Unsync: undefined,
     };
 
@@ -64,6 +70,7 @@ export async function Load(
     globalThis.gpfReact.userSoid = 'analytics/' + userId;
     globalThis.gpfReact.abtestSoid = 'ab_tests/' + appId;
     globalThis.gpfReact.coinAdminSoid = 'coin_admin/' + userId;
+    globalThis.gpfReact.coinLeaderBoardSoid = 'coin_leaderboard/main';
 
     // TODO refactor to call soListener, remove globalThis.gpfReact?.soListener?
     globalThis.gpfReact.onSOSync = (soJson) => {
@@ -125,6 +132,18 @@ export async function Load(
             const jsonMsg = JSON.stringify(message);
             unityInstance.SendMessage('GPFShim', 'OnReactMessage', jsonMsg);
           };
+
+          globalThis.gpfReact.SendQuery = (soid, type, json, queryId) => {
+            const message = {
+              cmd: 'SEND_QUERY',
+              soid,
+              msgType: type,
+              msgJson: json,
+              queryId: queryId,
+            };
+            const jsonMsg = JSON.stringify(message);
+            unityInstance.SendMessage('GPFShim', 'OnReactMessage', jsonMsg);
+          };
           console.log('calling globalThis.gpfReact?.loading?.resolve?');
           resolve({ done: true });
         })
@@ -149,4 +168,14 @@ export function Unsync(soid: JSONObject) {
 export function Send(soid: string, type: string, message: JSONObject) {
   const json = JSON.stringify(message);
   globalThis.gpfReact?.Send?.(soid, type, json);
+}
+
+export async function SendQuery(
+  soid: string,
+  type: string,
+  message: JSONObject
+) {
+  const json = JSON.stringify(message);
+  const queryId = `${Math.floor(Math.random() * 100000000)} - ${Date.now()}`;
+  globalThis.gpfReact?.SendQuery(soid, type, json, queryId);
 }
