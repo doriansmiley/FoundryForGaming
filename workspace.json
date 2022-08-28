@@ -6,6 +6,8 @@
     "hello-world-modules-moster-module": "libs/hello-world/modules/moster-module",
     "hello-world-modules-planets-module": "libs/hello-world/modules/planets-module",
     "hello-world-modules-planets-module-e2e": "apps/hello-world-modules-planets-module-e2e",
+    "leader-board": "apps/leader-board",
+    "leader-board-e2e": "apps/leader-board-e2e",
     "native-es-modules": "apps/native-es-modules",
     "native-es-modules-e2e": "apps/native-es-modules-e2e",
     "planets": "apps/planets",

@@ -20,6 +20,9 @@ export type gpfReact = {
   soListener: ((json: JSONObject) => void) | undefined;
   Sync: ((json: string) => void) | undefined;
   Unsync: ((json: JSONObject) => void) | undefined;
+  onQuerySuccess: ((msgJson, queryId) => void) | undefined;
+  onQueryFailure: ((reason, queryId) => void) | undefined;
+  queries: { inFlight: Record<string, any> };
   Send: ((soid: string, type: string, json: string) => void) | undefined;
   SendQuery:
     | ((soid: string, type: string, json: string, queryId: string) => void)
@@ -59,6 +62,9 @@ export async function Load(
       appId: undefined,
       onSOSync: undefined,
       soListener: undefined,
+      onQuerySuccess: undefined,
+      onQueryFailure: undefined,
+      queries: { inFlight: {} },
       Send: undefined,
       Sync: undefined,
       SendQuery: undefined,
@@ -67,10 +73,10 @@ export async function Load(
 
     globalThis.gpfReact.userId = userId;
     globalThis.gpfReact.appId = appId;
-    globalThis.gpfReact.userSoid = 'analytics/' + userId;
-    globalThis.gpfReact.abtestSoid = 'ab_tests/' + appId;
-    globalThis.gpfReact.coinAdminSoid = 'coin_admin/' + userId;
-    globalThis.gpfReact.coinLeaderBoardSoid = 'coin_leaderboard/main';
+    globalThis.gpfReact.userSoid = `analytics/${userId}`;
+    globalThis.gpfReact.abtestSoid = `ab_tests/${appId}`;
+    globalThis.gpfReact.coinAdminSoid = `coin_admin/${userId}`;
+    globalThis.gpfReact.coinLeaderBoardSoid = `coin_leaderboard/${appId}`;
 
     // TODO refactor to call soListener, remove globalThis.gpfReact?.soListener?
     globalThis.gpfReact.onSOSync = (soJson) => {
@@ -82,6 +88,25 @@ export async function Load(
       }
     };
     globalThis.gpfReact.soListener = soListener;
+
+    globalThis.gpfReact.onQuerySuccess = (msgJson, queryId) => {
+      const msg = JSON.parse(msgJson);
+      const scores = Object.keys(msg.scores).map((key) => {
+        return {
+          key,
+          score: msg.scores[key].score,
+          username: msg.scores[key].username,
+        };
+      });
+      const callback = window.gpfReact.queries.inFlight[queryId];
+      delete window.gpfReact.queries.inFlight[queryId];
+      callback(scores);
+    };
+    globalThis.gpfReact.onQueryFailure = (reason, queryId) => {
+      const callback = window.gpfReact.queries.inFlight[queryId];
+      delete window.gpfReact.queries.inFlight[queryId];
+      callback(reason);
+    };
 
     const loaderUrl = buildUrl + '/web.loader.js';
     const config = {
@@ -173,9 +198,11 @@ export function Send(soid: string, type: string, message: JSONObject) {
 export async function SendQuery(
   soid: string,
   type: string,
-  message: JSONObject
+  message: JSONObject,
+  callback: (result: JSONObject) => void
 ) {
   const json = JSON.stringify(message);
   const queryId = `${Math.floor(Math.random() * 100000000)} - ${Date.now()}`;
+  globalThis.gpfReact.queries.inFlight[queryId] = callback;
   globalThis.gpfReact?.SendQuery(soid, type, json, queryId);
 }

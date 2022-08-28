@@ -1,0 +1,60 @@
+{
+  "root": "apps/leader-board",
+  "sourceRoot": "apps/leader-board",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/leader-board",
+        "outputPath": "dist/apps/leader-board"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "leader-board:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "leader-board:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "leader-board:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "leader-board:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/leader-board"],
+      "options": {
+        "jestConfig": "apps/leader-board/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/leader-board/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

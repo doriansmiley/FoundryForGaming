@@ -24,6 +24,8 @@ export async function init(
   if (globalThis.gpfReact.userSoid) {
     console.log('calling Unity.Sync userSoid');
     Unity.Sync(globalThis.gpfReact.userSoid);
+    // TODO fix with the correct sync ID for analytics
+    Unity.Sync(`analytics/${globalThis.gpfReact.appId}`);
   }
   if (globalThis.gpfReact.coinAdminSoid) {
     console.log('calling Unity.Sync coinAdminSoid');
@@ -34,12 +36,17 @@ export async function init(
   return { done: true };
 }
 
-export function SendAnalytics(evtAttributes: JSONObject) {
+export function SendAnalytics(message: JSONObject) {
   if (globalThis.gpfReact?.userSoid) {
-    console.log(`Unity.Send sending analytics data name ${evtAttributes}`);
-    Unity.Send(globalThis.gpfReact?.userSoid, 'AnalyticsUserSO+Message', {
-      evtAttributes,
-    });
+    console.log(`Unity.Send sending analytics data name ${message}`);
+    console.log(
+      `Unity.Send sending analytics soid analytics/${globalThis.gpfReact.appId}`
+    );
+    Unity.Send(
+      `analytics/${globalThis.gpfReact.appId}`,
+      'AnalyticsUserSO+Message',
+      message
+    );
   }
 }
 
@@ -84,7 +91,9 @@ export function RemoveEntry(id) {
   }
 }
 
-export async function GetLeaderboardEntries() {
+export async function GetLeaderboardEntries(
+  callback: (result: JSONObject) => void
+) {
   if (globalThis.gpfReact.coinAdminSoid) {
     console.log(
       `Unity.Send getting leaderboard: ${globalThis.gpfReact.coinLeaderBoardSoid}`
@@ -92,7 +101,8 @@ export async function GetLeaderboardEntries() {
     Unity.SendQuery(
       globalThis.gpfReact.coinLeaderBoardSoid,
       'CoinLeaderboardSO+GetEntries',
-      {}
+      {},
+      callback
     );
   }
 }
