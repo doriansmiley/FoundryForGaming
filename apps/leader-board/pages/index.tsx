@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 
 export function Index() {
   const [scores, setScores] = useState([]);
+  const [topScores, setTopScores] = useState([]);
 
   function onSync(value: JSONObject) {
     // this global dync function requires introspection if the value to determine
@@ -27,6 +28,10 @@ export function Index() {
       case globalThis.gpfReact?.userSoid:
       case globalThis.gpfReact?.coinAdminSoid:
         console.log(`Index.onSync: ${JSON.stringify(value)}`);
+        break;
+      case globalThis.gpfReact?.topScoresSoid:
+        console.log(`Index.onSync: ${JSON.stringify(value.TopScores)}`);
+        setTopScores(value.TopScores);
         break;
       default:
         console.log(`Index.onSync: no matching object found for id: ${id}`);
@@ -65,7 +70,6 @@ export function Index() {
           (
             result as Array<{ key: string; username: string; score: number }>
           ).sort((first, second) => second.score - first.score);
-          console.log(JSON.stringify(result));
           setScores(
             result as Array<{ key: string; username: string; score: number }>
           );
@@ -83,6 +87,15 @@ export function Index() {
 
   return (
     <div className={styles.page}>
+      <h1>Top Scores</h1>
+      <ol>
+        {topScores?.map((score) => (
+          <li key={score.username}>
+            {score.username} - {score.score}
+          </li>
+        ))}
+      </ol>
+      <h1>Leaderboard</h1>
       <ol>
         {scores.map((score) => (
           <li key={score.key}>

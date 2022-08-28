@@ -31,6 +31,10 @@ export async function init(
     console.log('calling Unity.Sync coinAdminSoid');
     Unity.Sync(globalThis.gpfReact.coinAdminSoid);
   }
+  if (globalThis.gpfReact.topScoresSoid) {
+    console.log('calling Unity.Sync topScoresSoid');
+    Unity.Sync(globalThis.gpfReact.topScoresSoid);
+  }
   console.log('returning done');
 
   return { done: true };
@@ -59,6 +63,19 @@ export function SetTest(testName: string, testValue: string) {
       name: testName,
       value: testValue,
     });
+  }
+}
+
+export function SetTopScores(
+  scores: Array<{ key: string; username: string; score: number }>
+) {
+  if (globalThis.gpfReact.abtestSoid) {
+    console.log(`Unity.Send setting top scores.`);
+    Unity.Send(
+      globalThis.gpfReact.topScoresSoid,
+      'CoinTopScoresSO+SetTopScores',
+      { scores }
+    );
   }
 }
 

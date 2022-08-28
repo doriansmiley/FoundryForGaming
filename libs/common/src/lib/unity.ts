@@ -14,6 +14,7 @@ export type gpfReact = {
   appId: string | undefined;
   userSoid: string | undefined;
   coinAdminSoid: string | undefined;
+  topScoresSoid: string | undefined;
   coinLeaderBoardSoid: string | undefined;
   abtestSoid: string | undefined;
   onSOSync: ((json: string) => void) | undefined;
@@ -57,6 +58,7 @@ export async function Load(
       userSoid: undefined,
       abtestSoid: undefined,
       coinAdminSoid: undefined,
+      topScoresSoid: undefined,
       coinLeaderBoardSoid: undefined,
       userId: undefined,
       appId: undefined,
@@ -76,6 +78,7 @@ export async function Load(
     globalThis.gpfReact.userSoid = `analytics/${userId}`;
     globalThis.gpfReact.abtestSoid = `ab_tests/${appId}`;
     globalThis.gpfReact.coinAdminSoid = `coin_admin/${userId}`;
+    globalThis.gpfReact.topScoresSoid = `coin_top_scores/${appId}`;
     globalThis.gpfReact.coinLeaderBoardSoid = `coin_leaderboard/${appId}`;
 
     // TODO refactor to call soListener, remove globalThis.gpfReact?.soListener?
