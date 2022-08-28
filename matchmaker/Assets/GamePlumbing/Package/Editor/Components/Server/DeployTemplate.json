@@ -6,24 +6,6 @@
             "Type": "String",
             "Description": "Select a VPC that allows instances to access the Internet",
             "Default": "10.0.0.0/16"
-        },
-        "CryptoKey1": {
-            "NoEcho": true,
-            "Type": "String",
-            "Description": "(Required) The first Key used internally by encryption algorythms that encrypt IDs. 10-32 Characters.",
-            "Default": "key1234567890",
-            "MinLength": 10,
-            "MaxLength": 32,
-            "AllowedPattern": "^[A-Za-z_0-9]+$"
-        },
-        "CryptoKey2": {
-            "NoEcho": true,
-            "Type": "String",
-            "Description": "(Required) The second Key used internally by encryption algorythms that encrypt IDs. 5-16 Characters.",
-            "Default": "key12345",
-            "MinLength": 5,
-            "MaxLength": 16,
-            "AllowedPattern": "^[A-Za-z_0-9]+$"
         }
     },
     "Mappings": {
@@ -34,8 +16,14 @@
             "Memory": {
                 "Value": "%MEMORY%"
             },
+            "ThreadCount": {
+                "Value": "%THREAD_COUNT%"
+            },
+            "RESTEnabled": {
+                "Value": "%ENABLE_REST%"
+            },
             "DockerImage": {
-                "Value": "public.ecr.aws/a9v5u2b1/gpf-server-base:2504"
+                "Value": "public.ecr.aws/a9v5u2b1/gpf-server-base:2578"
             },
             "Domain": {
                 "Value": "%DOMAIN%"
@@ -55,6 +43,12 @@
             "UseEncryption": {
                 "Value": "%USE_ENCRYPTION%"
             },
+            "CryptoKey1": {
+                "Value": "%CRYPTO_KEY_1%"
+            },
+            "CryptoKey2": {
+                "Value": "%CRYPTO_KEY_2%"
+            },
             "AuthServerConfigs": {
                 "Value": "%AUTH_SERVER_CONFIGS%"
             },
@@ -69,6 +63,9 @@
             },
             "SendExceptionsToClient": {
                 "Value": "%SEND_EXCEPTIONS_TO_CLIENT%"
+            },
+            "ServerLogLevel": {
+                "Value": "%GPF_SERVER_LOG_LEVEL%"
             }
         }
     },
@@ -82,6 +79,12 @@
                         "Value"
                     ]
                 },
+                "True"
+            ]
+        },
+        "UseSecrets": {
+            "Fn::Equals": [
+                "%USE_SECRETS%",
                 "True"
             ]
         }
@@ -457,6 +460,24 @@
                                             ]
                                         }
                                     ]
+                                },
+                                {
+                                    "Effect": {
+                                        "Fn::If": [
+                                            "UseSecrets",
+                                            "Allow",
+                                            "Deny"
+                                        ]
+                                    },
+                                    "Action": [
+                                        "secretsmanager:GetResourcePolicy",
+                                        "secretsmanager:GetSecretValue",
+                                        "secretsmanager:DescribeSecret",
+                                        "secretsmanager:ListSecretVersionIds"
+                                    ],
+                                    "Resource": [
+                                        "%SECRETS%"
+                                    ]
                                 }
                             ]
                         }
@@ -531,6 +552,16 @@
                         },
                         "Environment": [
                             {
+                                "Name": "GPF_SERVER_LOG_LEVEL",
+                                "Value": {
+                                    "Fn::FindInMap": [
+                                        "Main",
+                                        "ServerLogLevel",
+                                        "Value"
+                                    ]
+                                }
+                            },
+                            {
                                 "Name": "SEND_DOWN_EXCEPTIONS",
                                 "Value": {
                                     "Fn::FindInMap": [
@@ -581,14 +612,46 @@
                             {
                                 "Name": "CRYPTO_KEY_1",
                                 "Value": {
-                                    "Ref": "CryptoKey1"
+                                    "Fn::FindInMap": [
+                                        "Main",
+                                        "CryptoKey1",
+                                        "Value"
+                                    ]
                                 }
                             },
                             {
                                 "Name": "CRYPTO_KEY_2",
                                 "Value": {
-                                    "Ref": "CryptoKey2"
+                                    "Fn::FindInMap": [
+                                        "Main",
+                                        "CryptoKey2",
+                                        "Value"
+                                    ]
                                 }
+                            },
+                            {
+                                "Name": "ENABLE_REST",
+                                "Value": {
+                                    "Fn::FindInMap": [
+                                        "Main",
+                                        "RESTEnabled",
+                                        "Value"
+                                    ]
+                                }
+                            },
+                            {
+                                "Name": "THREAD_COUNT",
+                                "Value": {
+                                    "Fn::FindInMap": [
+                                        "Main",
+                                        "ThreadCount",
+                                        "Value"
+                                    ]
+                                }
+                            },
+                            {
+                                "Name": "GPF_CCU_LIMIT_KEY",
+                                "Value": "%GPF_CCU_LIMIT_KEY%"
                             }
                         ],
                         "PortMappings": [
@@ -696,7 +759,8 @@
                             ]
                         }
                     }
-                ]
+                ],
+                "SslPolicy": "ELBSecurityPolicy-FS-1-2-Res-2020-10"
             }
         },
         "ECSTG": {
@@ -825,6 +889,26 @@
             },
             "Description": "The memory for each container (in megabytes)"
         },
+        "ThreadCount": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "ThreadCount",
+                    "Value"
+                ]
+            },
+            "Description": "The thread count for each container"
+        },
+        "RESTEnabled": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "RESTEnabled",
+                    "Value"
+                ]
+            },
+            "Description": "Whether REST is enabled."
+        },
         "Domain": {
             "Value": {
                 "Fn::FindInMap": [
@@ -885,6 +969,26 @@
             },
             "Description": "Whether or not to encrypt public SOIDs"
         },
+        "CryptoKey1": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "CryptoKey1",
+                    "Value"
+                ]
+            },
+            "Description": "The first Key used internally by encryption algorythms that encrypt IDs. 10-32 Characters."
+        },
+        "CryptoKey2": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "CryptoKey2",
+                    "Value"
+                ]
+            },
+            "Description": "The second Key used internally by encryption algorythms that encrypt IDs. 5-16 Characters."
+        },
         "AuthServerConfigs": {
             "Value": {
                 "Fn::FindInMap": [
@@ -934,6 +1038,16 @@
                 ]
             },
             "Description": "Should errors be reported to the client app (dev)"
+        },
+        "ServerLogLevel": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "Main",
+                    "ServerLogLevel",
+                    "Value"
+                ]
+            },
+            "Description": "Set the log level for the server framework."
         }
     }
 }

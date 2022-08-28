@@ -1,0 +1,473 @@
+[LicensingClient] Error: Code 10 while verifying Licensing Client signature (process Id: 22544, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::Module] Error: LicensingClient has failed validation
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-dparker-2020.3.25" (connect: 0.00s, validation: 0.01s, handshake: 0.52s)
+Entitlement-based licensing initiated
+[LicensingClient] Licenses updated successfully
+
+LICENSE SYSTEM [202255 9:1:50] Next license update check is after 2022-05-01T14:48:21
+
+
+LICENSE SYSTEM [202255 9:1:50] Current license is already valid and activated. Skipping license activation process (Provided username/password will be ignored).
+Built from '2020.3/staging' branch; Version is '2020.3.25f1 (9b9180224418) revision 10195328'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 11  (10.0.22000) 64bit Professional' Language: 'en' Physical Memory: 32716 MB
+[Licensing::Module] Serial number assigned to: "SB-QQX7-77PP-Q8HE-D72T-XXXX"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+[Package Manager] Server::Start -- Port 64666 was selected
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.25f1\Editor\Unity.exe
+-batchmode
+-executeMethod
+DeployBackend.Deploy
+-projectPath
+../matchmaker
+-logfile
+log.txt
+Successfully changed project path to: C:/Work/LaunchItLabs/FoundryForGaming/matchmaker
+C:/Work/LaunchItLabs/FoundryForGaming/matchmaker
+Using Asset Import Pipeline V2.
+[Package Manager] Restoring resolved packages state from cache
+[Package Manager] Done checking package constraints in 0.00s seconds
+[Package Manager] 
+Registered 44 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.collab-proxy@1.15.4 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.collab-proxy@1.15.4)
+    com.unity.ide.rider@2.0.7 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.ide.rider@2.0.7)
+    com.unity.ide.visualstudio@2.0.12 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.ide.visualstudio@2.0.12)
+    com.unity.ide.vscode@1.2.4 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.ide.vscode@1.2.4)
+    com.unity.test-framework@1.1.29 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.test-framework@1.1.29)
+    com.unity.textmeshpro@3.0.6 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.textmeshpro@3.0.6)
+    com.unity.timeline@1.4.8 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.timeline@1.4.8)
+    com.unity.ext.nunit@1.0.6 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.ext.nunit@1.0.6)
+    com.unity.nuget.newtonsoft-json@2.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0)
+    com.unity.services.core@1.0.1 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.services.core@1.0.1)
+  Built-in packages:
+    com.unity.ugui@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.ugui@1.0.0)
+    com.unity.modules.ai@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.ai@1.0.0)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.androidjni@1.0.0)
+    com.unity.modules.animation@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.animation@1.0.0)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.assetbundle@1.0.0)
+    com.unity.modules.audio@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.audio@1.0.0)
+    com.unity.modules.cloth@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.cloth@1.0.0)
+    com.unity.modules.director@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.director@1.0.0)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.imageconversion@1.0.0)
+    com.unity.modules.imgui@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.imgui@1.0.0)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.jsonserialize@1.0.0)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.particlesystem@1.0.0)
+    com.unity.modules.physics@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.physics@1.0.0)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.physics2d@1.0.0)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.screencapture@1.0.0)
+    com.unity.modules.terrain@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.terrain@1.0.0)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.terrainphysics@1.0.0)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.tilemap@1.0.0)
+    com.unity.modules.ui@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.ui@1.0.0)
+    com.unity.modules.uielements@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.uielements@1.0.0)
+    com.unity.modules.umbra@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.umbra@1.0.0)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.unityanalytics@1.0.0)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.unitywebrequest@1.0.0)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle@1.0.0)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.unitywebrequestaudio@1.0.0)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.unitywebrequesttexture@1.0.0)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.unitywebrequestwww@1.0.0)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.vehicles@1.0.0)
+    com.unity.modules.video@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.video@1.0.0)
+    com.unity.modules.vr@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.vr@1.0.0)
+    com.unity.modules.wind@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.wind@1.0.0)
+    com.unity.modules.xr@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.xr@1.0.0)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.subsystems@1.0.0)
+    com.unity.modules.uielementsnative@1.0.0 (location: C:\Work\LaunchItLabs\FoundryForGaming\matchmaker\Library\PackageCache\com.unity.modules.uielementsnative@1.0.0)
+
+[Subsystems] No new subsystems found in resolved package list.
+Package Manager log level set to [2]
+[Package Manager] Done registering packages in 0.04s seconds
+Refreshing native plugins compatible for Editor in 26.84 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.25f1 (9b9180224418)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Work/LaunchItLabs/FoundryForGaming/matchmaker/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3060 Ti (ID=0x2486)
+    Vendor:   
+    VRAM:     8050 MB
+    Driver:   30.0.15.1179
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56908
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.023805 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 24.32 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.518 seconds
+Domain Reload Profiling:
+	ReloadAssembly (519ms)
+		BeginReloadAssembly (47ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (391ms)
+			LoadAssemblies (45ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (137ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (27ms)
+			SetupLoadedEditorAssemblies (140ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (9ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (24ms)
+				BeforeProcessingInitializeOnLoad (15ms)
+				ProcessInitializeOnLoadAttributes (69ms)
+				ProcessInitializeOnLoadMethodAttributes (22ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Validating Project structure ... 0.001078 seconds.
+Shader import version has changed; will reimport all shaders...
+Upgrading shader files ...0.001026 seconds.
+Application.AssetDatabase Initial Script Refresh Start
+Registering precompiled user dll's ...
+Registered in 0.003798 seconds.
+AssetDatabase: script compilation time: 0.031384s
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.32 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.071 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1072ms)
+		BeginReloadAssembly (112ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (16ms)
+		EndReloadAssembly (910ms)
+			LoadAssemblies (65ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (243ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (40ms)
+			SetupLoadedEditorAssemblies (480ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (11ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (72ms)
+				ProcessInitializeOnLoadAttributes (385ms)
+				ProcessInitializeOnLoadMethodAttributes (7ms)
+				AfterProcessingInitializeOnLoad (3ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+RefreshInfo: InitialScriptRefreshV2(NoUpdateAssetOptions) scanfilter:  ... 1 filters
+RefreshProfiler: Total: 1654.379ms
+	InvokeBeforeRefreshCallbacks: 0.271ms
+	ApplyChangesToAssetFolders: 0.043ms
+	Scan: 56.257ms
+	OnSourceAssetsModified: 0.000ms
+	InitializeImportedAssetsSnapshot: 0.095ms
+	GetAllGuidsForCategorization: 0.137ms
+	CategorizeAssets: 22.685ms
+	ImportAndPostprocessOutOfDateAssets: 1537.481ms (1505.201ms without children)
+		CompileScripts: 31.902ms
+		PostProcessAllAssets: 0.000ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.154ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.161ms
+		RestoreLoadedAssetsState: 0.063ms
+	ReloadSourceAssets: 0.194ms
+	UnloadImportedAssets: 0.003ms
+	Hotreload: 0.563ms
+	FixTempGuids: 0.004ms
+	UnloadStreamsBegin: 0.308ms
+	LoadedImportedAssetsSnapshotReleaseGCHandles: 0.004ms
+	GetLoadedSourceAssetsSnapshot: 0.089ms
+	PersistCurrentRevisions: 0.342ms
+	UnloadStreamsEnd: 5.461ms
+	GenerateScriptTypeHashes: 0.110ms
+	Untracked: 30.442ms
+Application.AssetDatabase Initial Script Refresh End
+Application.AssetDatabase.Refresh Start
+Refresh completed in 0.050040 seconds.
+RefreshInfo: RefreshV2(ForceSynchronousImport) scanfilter: 
+RefreshProfiler: Total: 50.028ms
+Application.AssetDatabase.Refresh End
+RefreshInfo: StopAssetImportingV2(ForceSynchronousImport) scanfilter: 
+RefreshProfiler: Total: 2.571ms
+Refresh completed in 0.043019 seconds.
+RefreshInfo: RefreshV2(NoUpdateAssetOptions) scanfilter: 
+RefreshProfiler: Total: 43.003ms
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Initializing Unity extensions:
+Unloading 51 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 70.7 MB.
+System memory in use after: 69.7 MB.
+
+Unloading 87 unused Assets to reduce memory usage. Loaded Objects now: 2011.
+Total: 3.218300 ms (FindLiveObjects: 0.077200 ms CreateObjectMapping: 0.036300 ms MarkObjects: 2.675200 ms  DeleteObjects: 0.428900 ms)
+
+ProgressiveSceneManager::Cancel()
+Fallback handler could not load library C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Mono/lib/libc
+Fallback handler could not load library C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Mono/lib/libc.dll
+Fallback handler could not load library C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Mono/lib/libc
+[Project] Loading completed in 11.772 seconds
+	Project init time: 				0.927 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		0.000 seconds
+		Asset Database init time: 		0.000 seconds
+		Global illumination init time: 	0.000 seconds
+		Assemblies load time: 			0.000 seconds
+		Unity extensions init time: 	0.001 seconds
+		Asset Database refresh time: 	0.000 seconds
+	Scene opening time: 			5.620 seconds
+Visual Studio Editor Package version 2.0.15 is available, we strongly encourage you to update from the Unity Package Manager for a better Visual Studio integration
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogWarning (object)
+Microsoft.Unity.VisualStudio.Editor.VisualStudioIntegration:HandleListRequestCompletion () (at Library/PackageCache/com.unity.ide.visualstudio@2.0.12/Editor/VisualStudioIntegration.cs:150)
+Microsoft.Unity.VisualStudio.Editor.VisualStudioIntegration:OnUpdate () (at Library/PackageCache/com.unity.ide.visualstudio@2.0.12/Editor/VisualStudioIntegration.cs:163)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Library/PackageCache/com.unity.ide.visualstudio@2.0.12/Editor/VisualStudioIntegration.cs Line: 150)
+
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Matchmaker
+[UnityConnectServicesConfig] config is NOT valid, switching to default
+Created GICache directory at C:/Users/dparker/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.013s, timestamps: [11.776 - 11.789]
+gi::BakeBackendSwitch: switching bake backend from 3 to 1.
+[00:00:05] Enlighten: Builtin Sky manager started.
+[00:00:05] Enlighten: Finished 1 Bake Ambient Probe job (0.00s execute, 0.00s integrate, 0.05s wallclock)
+[00:00:05] Enlighten: Finished 1 Bake Ambient Probe job (0.00s execute, 0.00s integrate, 0.05s wallclock)
+> aws s3 rm s3://gpf-react-managementbucket-1whi0mjzoxebt --recursive --region us-west-2 --output json
+> aws s3 cp "Temp/GPFServer\Management" s3://gpf-react-managementbucket-1whi0mjzoxebt/ --recursive --region us-west-2 --output json
+Completed 27 Bytes/125.7 KiB (35 Bytes/s) with 5 file(s) remaining
+upload: Temp\GPFServer\Management\authConfigs.json to s3://gpf-react-managementbucket-1whi0mjzoxebt/authConfigs.json
+Completed 27 Bytes/125.7 KiB (35 Bytes/s) with 4 file(s) remaining
+Completed 67 Bytes/125.7 KiB (86 Bytes/s) with 4 file(s) remaining
+upload: Temp\GPFServer\Management\soEnv.json to s3://gpf-react-managementbucket-1whi0mjzoxebt/soEnv.json
+Completed 67 Bytes/125.7 KiB (86 Bytes/s) with 3 file(s) remaining
+Completed 179 Bytes/125.7 KiB (223 Bytes/s) with 3 file(s) remaining
+upload: Temp\GPFServer\Management\versions.json to s3://gpf-react-managementbucket-1whi0mjzoxebt/versions.json
+Completed 179 Bytes/125.7 KiB (223 Bytes/s) with 2 file(s) remaining
+Completed 6.2 KiB/125.7 KiB (7.7 KiB/s) with 2 file(s) remaining    
+upload: Temp\GPFServer\Management\serialization.json to s3://gpf-react-managementbucket-1whi0mjzoxebt/serialization.json
+Completed 6.2 KiB/125.7 KiB (7.7 KiB/s) with 1 file(s) remaining
+Completed 125.7 KiB/125.7 KiB (130.8 KiB/s) with 1 file(s) remaining
+upload: Temp\GPFServer\Management\customerServerObjects.dll to s3://gpf-react-managementbucket-1whi0mjzoxebt/customerServerObjects.dll
+> aws ecs update-service --cluster gpf-react-ECSCluster-4qZduHcEV28L --service arn:aws:ecs:us-west-2:525665374615:service/gpf-react-ECSCluster-4qZduHcEV28L/gpf-react-Service-pMzhrOsyNXGS --desired-count 1 --region us-west-2 --output json
+{
+    "service": {
+        "serviceArn": "arn:aws:ecs:us-west-2:525665374615:service/gpf-react-ECSCluster-4qZduHcEV28L/gpf-react-Service-pMzhrOsyNXGS",
+        "serviceName": "gpf-react-Service-pMzhrOsyNXGS",
+        "clusterArn": "arn:aws:ecs:us-west-2:525665374615:cluster/gpf-react-ECSCluster-4qZduHcEV28L",
+        "loadBalancers": [
+            {
+                "targetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:525665374615:targetgroup/gpf-r-ECSTG-KZLXTUP5OJ41/80739c622dc07294",
+                "containerName": "gpf-server-container",
+                "containerPort": 8282
+            }
+        ],
+        "serviceRegistries": [],
+        "status": "ACTIVE",
+        "desiredCount": 1,
+        "runningCount": 0,
+        "pendingCount": 0,
+        "launchType": "FARGATE",
+        "platformVersion": "LATEST",
+        "platformFamily": "Linux",
+        "taskDefinition": "arn:aws:ecs:us-west-2:525665374615:task-definition/gpf-react-gpf-server:1",
+        "deploymentConfiguration": {
+            "deploymentCircuitBreaker": {
+                "enable": false,
+                "rollback": false
+            },
+            "maximumPercent": 200,
+            "minimumHealthyPercent": 100
+        },
+        "deployments": [
+            {
+                "id": "ecs-svc/9030222142310661707",
+                "status": "PRIMARY",
+                "taskDefinition": "arn:aws:ecs:us-west-2:525665374615:task-definition/gpf-react-gpf-server:1",
+                "desiredCount": 1,
+                "pendingCount": 0,
+                "runningCount": 0,
+                "failedTasks": 0,
+                "createdAt": "2022-05-05T09:06:01.922000-06:00",
+                "updatedAt": "2022-05-05T09:06:04.259000-06:00",
+                "launchType": "FARGATE",
+                "platformVersion": "1.4.0",
+                "platformFamily": "Linux",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-0de4786005cf2437d",
+                            "subnet-0ef7e2e2bb4c43565"
+                        ],
+                        "securityGroups": [
+                            "sg-060b6ae5fb8bca5d6"
+                        ],
+                        "assignPublicIp": "ENABLED"
+                    }
+                },
+                "rolloutState": "COMPLETED",
+                "rolloutStateReason": "ECS deployment ecs-svc/9030222142310661707 completed."
+            }
+        ],
+        "roleArn": "arn:aws:iam::525665374615:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+        "events": [
+            {
+                "id": "66d44b46-290f-4a0f-addd-080cc15e6431",
+                "createdAt": "2022-05-05T09:06:04.264000-06:00",
+                "message": "(service gpf-react-Service-pMzhrOsyNXGS) has reached a steady state."
+            },
+            {
+                "id": "2391b83d-c483-490f-9c76-058d97656b0a",
+                "createdAt": "2022-05-05T09:06:04.263000-06:00",
+                "message": "(service gpf-react-Service-pMzhrOsyNXGS) (deployment ecs-svc/9030222142310661707) deployment completed."
+            }
+        ],
+        "createdAt": "2022-05-05T09:06:01.922000-06:00",
+        "placementConstraints": [],
+        "placementStrategy": [],
+        "networkConfiguration": {
+            "awsvpcConfiguration": {
+                "subnets": [
+                    "subnet-0de4786005cf2437d",
+                    "subnet-0ef7e2e2bb4c43565"
+                ],
+                "securityGroups": [
+                    "sg-060b6ae5fb8bca5d6"
+                ],
+                "assignPublicIp": "ENABLED"
+            }
+        },
+        "healthCheckGracePeriodSeconds": 0,
+        "schedulingStrategy": "REPLICA",
+        "createdBy": "arn:aws:iam::525665374615:user/Dan_programmatic_access",
+        "enableECSManagedTags": false,
+        "propagateTags": "NONE",
+        "enableExecuteCommand": false
+    }
+}
+Waiting for the server to start...
+Server ready, refreshing stack
+Deployment Complete.
+[Performance] WinEditorMain                                               :        1 samples, Peak.   635 ms (1.0x), Avg.   635 ms, Total. 635.3 ms (0.2%)
+[Performance] WinEditorMain.ConfigureCrashHandler                         :        1 samples, Peak.  15.7 us (1.0x), Avg.  15.7 us, Total. 15.70 us (0.0%)
+[Performance] WinEditorMain.CurlRequestInitialize                         :        1 samples, Peak.  1.12 ms (1.0x), Avg.  1.12 ms, Total. 1.123 ms (0.0%)
+[Performance] WinEditorMain.SetupLogFile                                  :        1 samples, Peak.   216 us (1.0x), Avg.   216 us, Total. 216.0 us (0.0%)
+[Performance] WinEditorMain.RunNativeTestsIfRequiredAndExit               :        1 samples, Peak. 100.0 ns (1.0x), Avg. 100.0 ns, Total. 100.00 ns (0.0%)
+[Performance] WinEditorMain.Licensing                                     :        1 samples, Peak.   612 ms (1.0x), Avg.   612 ms, Total. 611.6 ms (0.2%)
+[Performance] WinEditorMain.InitializeCrashHandler                        :        1 samples, Peak.  11.6 ms (1.0x), Avg.  11.6 ms, Total. 11.59 ms (0.0%)
+[Performance] WinEditorMain.CreateApplication                             :        1 samples, Peak.   180 us (1.0x), Avg.   180 us, Total. 180.2 us (0.0%)
+[Performance] Application.InitializeProject                               :        1 samples, Peak.  5.48 s (1.0x), Avg.  5.48 s, Total. 5.477 s (1.5%)
+[Performance] Application.PackageManager.StartServer                      :        1 samples, Peak.  3.20 ms (1.0x), Avg.  3.20 ms, Total. 3.204 ms (0.0%)
+[Performance] Application.AcquireProjectLock                              :        1 samples, Peak.  4.69 ms (1.0x), Avg.  4.69 ms, Total. 4.686 ms (0.0%)
+[Performance] Application.InitializeEngineNoGraphics                      :        1 samples, Peak.  9.63 ms (1.0x), Avg.  9.63 ms, Total. 9.631 ms (0.0%)
+[Performance] Application.PackageManager.Initialize                       :        1 samples, Peak.  1.07 s (1.0x), Avg.  1.07 s, Total. 1.074 s (0.3%)
+[Performance] CurlRequestCheck                                            :       18 samples, Peak.  50.4 us (6.3x), Avg.  7.98 us, Total. 143.6 us (0.0%)
+[Performance] VersionControl.Task.Wait                                    :        1 samples, Peak.  6.60 us (1.0x), Avg.  6.60 us, Total. 6.600 us (0.0%)
+[Performance] Application.EngineGraphics.Initialize                       :        1 samples, Peak.  96.9 ms (1.0x), Avg.  96.9 ms, Total. 96.88 ms (0.0%)
+[Performance] Application.GI.Initialize                                   :        1 samples, Peak.  1.40 ms (1.0x), Avg.  1.40 ms, Total. 1.400 ms (0.0%)
+[Performance] Application.LoadAllDefaultResourcesFromEditor               :        1 samples, Peak.  1.50 ms (1.0x), Avg.  1.50 ms, Total. 1.505 ms (0.0%)
+[Performance] Application.LoadMonoAssemblies                              :        1 samples, Peak.   526 ms (1.0x), Avg.   526 ms, Total. 526.4 ms (0.1%)
+[Performance] RestoreManagedReferences                                    :        2 samples, Peak.  69.3 ms (2.0x), Avg.  34.7 ms, Total. 69.33 ms (0.0%)
+[Performance] ProcessService.EditorAfterLoadAllAssemblies                 :        2 samples, Peak.   335 us (1.2x), Avg.   276 us, Total. 552.0 us (0.0%)
+[Performance] Application.ReadLicenseInfo                                 :        1 samples, Peak.  12.1 ms (1.0x), Avg.  12.1 ms, Total. 12.07 ms (0.0%)
+[Performance] Application.InitialScriptRefresh                            :        1 samples, Peak.  1.66 s (1.0x), Avg.  1.66 s, Total. 1.656 s (0.5%)
+[Performance] Compiling Scripts                                           :        1 samples, Peak.  31.9 ms (1.0x), Avg.  31.9 ms, Total. 31.86 ms (0.0%)
+[Performance] Application.AssetDatabase.Refresh                           :        1 samples, Peak.  50.1 ms (1.0x), Avg.  50.1 ms, Total. 50.14 ms (0.0%)
+[Performance] AssetDatabase.Refresh                                       :        1 samples, Peak.  50.1 ms (1.0x), Avg.  50.1 ms, Total. 50.11 ms (0.0%)
+[Performance] Application.ImportAssetsWithMismatchingAssetImporterVersion :        1 samples, Peak.  57.4 ms (1.0x), Avg.  57.4 ms, Total. 57.37 ms (0.0%)
+[Performance] Application.SyncCurrentColorSpace                           :        1 samples, Peak.  85.2 ms (1.0x), Avg.  85.2 ms, Total. 85.22 ms (0.0%)
+[Performance] Application.OnUsbDevicesChanged                             :        1 samples, Peak.  8.95 ms (1.0x), Avg.  8.95 ms, Total. 8.948 ms (0.0%)
+[Performance] Application.AssetInstanceCacheUpdate                        :        1 samples, Peak. 100.0 ns (1.0x), Avg. 100.0 ns, Total. 100.00 ns (0.0%)
+[Performance] Application.UnityExtensions.Initialize                      :        1 samples, Peak.   675 us (1.0x), Avg.   675 us, Total. 675.1 us (0.0%)
+[Performance] Application.InitializeManagedCompilationPipeline            :        1 samples, Peak.  46.6 ms (1.0x), Avg.  46.6 ms, Total. 46.62 ms (0.0%)
+[Performance] Application.ExecuteStartups                                 :        1 samples, Peak.   736 ms (1.0x), Avg.   736 ms, Total. 736.3 ms (0.2%)
+[Performance] Gizmo.RebuildRenderers                                      :        1 samples, Peak.   144 ms (1.0x), Avg.   144 ms, Total. 144.2 ms (0.0%)
+[Performance] Gizmo.AddGizmoRenderers                                     :       44 samples, Peak.  1.15 ms (24.2x), Avg.  47.4 us, Total. 2.087 ms (0.0%)
+[Performance] Application.InitializeMenu                                  :        1 samples, Peak.  42.7 ms (1.0x), Avg.  42.7 ms, Total. 42.74 ms (0.0%)
+[Performance] UpdateAllMenus                                              :       19 samples, Peak.  41.8 ms (18.8x), Avg.  2.22 ms, Total. 42.16 ms (0.0%)
+[Performance] Application.editorInitializingProject                       :        1 samples, Peak.  17.4 us (1.0x), Avg.  17.4 us, Total. 17.40 us (0.0%)
+[Performance] Application.FinishLoadingProject                            :        1 samples, Peak.  5.62 s (1.0x), Avg.  5.62 s, Total. 5.620 s (1.5%)
+[Performance] GUIView.RepaintAll.PlayerLoopController                     :        4 samples, Peak.   900 ns (1.6x), Avg.   550 ns, Total. 2.200 us (0.0%)
+[Performance] Application.InvokeFinishedLoadingProject                    :        1 samples, Peak.  44.1 ms (1.0x), Avg.  44.1 ms, Total. 44.14 ms (0.0%)
+[Performance] ProcessService.OnProjectLoaded                              :        1 samples, Peak.  39.1 us (1.0x), Avg.  39.1 us, Total. 39.10 us (0.0%)
+[Performance] Application.InvokeProjectWasLoaded                          :        1 samples, Peak.  54.0 us (1.0x), Avg.  54.0 us, Total. 54.00 us (0.0%)
+[Performance] Application.Message                                         :   102005 samples, Peak.  9.97 ms (9910.9x), Avg.  1.01 us, Total. 102.6 ms (0.0%)
+[Performance] Application.Message.WM_0031F                                :        1 samples, Peak.  10.1 us (1.0x), Avg.  10.1 us, Total. 10.10 us (0.0%)
+[Performance] Application.Tick                                            :   102004 samples, Peak.   764 ms (2990.8x), Avg.   255 us, Total. 26.04 s (7.1%)
+[Performance] CheckLicensingClient                                        :       72 samples, Peak.  51.2 us (2.2x), Avg.  23.1 us, Total. 1.660 ms (0.0%)
+[Performance] Application.TickVersionControl                              :   102005 samples, Peak.  57.6 us (43.9x), Avg.  1.31 us, Total. 133.9 ms (0.0%)
+[Performance] MonoCompiler.Tick                                           :     1758 samples, Peak.  83.2 us (5.4x), Avg.  15.3 us, Total. 26.89 ms (0.0%)
+[Performance] UnityConnect.Tick                                           :     6847 samples, Peak.   735 us (191.7x), Avg.  3.83 us, Total. 26.25 ms (0.0%)
+[Performance] Collab.Tick                                                 :     6847 samples, Peak.  44.7 us (49.7x), Avg.   899 ns, Total. 6.158 ms (0.0%)
+[Performance] CurlRequest.Tick                                            :     3484 samples, Peak.   263 us (181.3x), Avg.  1.45 us, Total. 5.052 ms (0.0%)
+[Performance] WebSocketClient.Tick                                        :     3484 samples, Peak.  32.1 us (54.6x), Avg.   588 ns, Total. 2.048 ms (0.0%)
+[Performance] AssetDatabase.Tick                                          :     3484 samples, Peak.   111 us (282.8x), Avg.   393 ns, Total. 1.368 ms (0.0%)
+[Performance] SceneBackgroundTask.Tick                                    :     2337 samples, Peak.  34.6 us (70.1x), Avg.   493 ns, Total. 1.153 ms (0.0%)
+[Performance] Scheduler.Tick                                              :    31298 samples, Peak.  2.56 ms (221.2x), Avg.  11.6 us, Total. 362.8 ms (0.1%)
+[Performance] RepaintAllProfilerWindows                                   :      707 samples, Peak.   225 us (62.4x), Avg.  3.61 us, Total. 2.549 ms (0.0%)
+[Performance] PlayerUpdates.Tick                                          :     6846 samples, Peak.   618 us (24.6x), Avg.  25.1 us, Total. 172.0 ms (0.0%)
+[Performance] Application.TickGlobalCallbacks                             :   102005 samples, Peak.  2.48 ms (197.5x), Avg.  12.6 us, Total. 1.283 s (0.3%)
+[Performance] CoreBusinessMetrics.Tick                                    :        6 samples, Peak.   239 us (1.5x), Avg.   161 us, Total. 967.7 us (0.0%)
+[Performance] EditorAnalytics.Tick                                        :     1409 samples, Peak.  23.3 us (24.5x), Avg.   952 ns, Total. 1.342 ms (0.0%)
+[Performance] GI.Tick                                                     :     6846 samples, Peak.  2.48 ms (30.2x), Avg.  82.2 us, Total. 563.1 ms (0.2%)
+[Performance] Video.Update                                                :   102005 samples, Peak.  52.9 us (77.4x), Avg.   683 ns, Total. 69.69 ms (0.0%)
+[Performance] UnitySynchronization.ExecuteTasks                           :     6845 samples, Peak.   763 ms (4503.2x), Avg.   169 us, Total. 1.160 s (0.3%)
+[Performance] Application.TickPreloadManager                              :   102004 samples, Peak.   100 us (17.3x), Avg.  5.80 us, Total. 591.9 ms (0.2%)
+[Performance] Application.TickProgress                                    :   102004 samples, Peak.   594 us (713.1x), Avg.   833 ns, Total. 84.93 ms (0.0%)
+[Performance] Application.TickSceneTracker                                :   102004 samples, Peak.   118 ms (911.7x), Avg.   129 us, Total. 13.18 s (3.6%)
+[Performance] EditorApplication.update                                    :   102004 samples, Peak.   118 ms (978.5x), Avg.   120 us, Total. 12.27 s (3.3%)
+[Performance] ConsoleLog.Tick                                             :     1757 samples, Peak.   274 us (51.4x), Avg.  5.33 us, Total. 9.362 ms (0.0%)
+[Performance] HierarchyWindow.Tick                                        :     2336 samples, Peak.   173 us (320.0x), Avg.   540 ns, Total. 1.261 ms (0.0%)
+[Performance] Inspector.Tick                                              :     2336 samples, Peak.  21.6 ms (1855.2x), Avg.  11.7 us, Total. 27.22 ms (0.0%)
+[Performance] Tooltip.Tick                                                :     6840 samples, Peak.   654 us (42.1x), Avg.  15.5 us, Total. 106.2 ms (0.0%)
+[Performance] Application.RequestRepaintForPanels                         :   102004 samples, Peak.   311 us (60.6x), Avg.  5.13 us, Total. 523.6 ms (0.1%)
+[Performance] Application.UpdateScene                                     :   102004 samples, Peak.   800 us (62.2x), Avg.  12.9 us, Total. 1.312 s (0.4%)
+[Performance] Application.UpdateTextureStreaming                          :   102004 samples, Peak.  55.0 us (106.4x), Avg.   517 ns, Total. 52.75 ms (0.0%)
+[Performance] Application.UpdateVideoTextures                             :   102004 samples, Peak.  44.6 us (116.1x), Avg.   384 ns, Total. 39.17 ms (0.0%)
+[Performance] PackageImporter.Tick                                        :     1757 samples, Peak.  1.40 us (2.6x), Avg.   530 ns, Total. 931.3 us (0.0%)
+[Performance] InspectorBackground.Tick                                    :     2336 samples, Peak.  26.7 us (56.0x), Avg.   477 ns, Total. 1.113 ms (0.0%)
+[Performance] Application.ChangeLayoutIfNeeded                            :   102004 samples, Peak.  54.6 us (199.4x), Avg.   274 ns, Total. 27.94 ms (0.0%)
+[Performance] AsyncReadManager.ForceCloseFiles                            :      354 samples, Peak.  60.0 us (32.7x), Avg.  1.84 us, Total. 649.8 us (0.0%)
+[Performance] GUIView.RepaintAll.RepaintScene                             :   102001 samples, Peak.  60.7 us (79.2x), Avg.   767 ns, Total. 78.22 ms (0.0%)
+[Performance] Application.Idle                                            :   101966 samples, Peak.  7.30 ms (2.3x), Avg.  3.18 ms, Total. 323.9 s (88.2%)
+[Performance] Application.Message.WM_00400                                :        1 samples, Peak.  95.0 us (1.0x), Avg.  95.0 us, Total. 95.00 us (0.0%)
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server::Kill -- Server was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1651763278080,"processId":11908,"allocatedMemory":458545,"memoryLabels":[{"Default":-900},{"Permanent":392},{"NewDelete":117398},{"Thread":95},{"Manager":2720},{"VertexData":192},{"Texture":152},{"GfxDevice":196904},{"Physics":1},{"Serialization":456},{"WebCam":72},{"String":41130},{"DynamicArray":25784},{"HashMap":19471},{"Utility":400},{"Curl":1440},{"PoolAlloc":176},{"GI":472},{"VR":1888},{"Secure":240},{"Subsystems":96},{"EditorGui":56},{"EditorUtility":1552},{"AssetDatabase":7477},{"RestService":152},{"License":8864},{"UnityConnect":26392},{"Collab":779},{"TLS":2958},{"Licensing":1736}]}
