@@ -7,6 +7,7 @@ import {
   JSONObject,
   RemoveTest,
   SendAnalytics,
+  GetLeaderboardEntries,
   SetTest,
   useInjection,
 } from '@foundry-for-gaming/common';
@@ -22,6 +23,7 @@ export function Index() {
     switch (id) {
       case globalThis.gpfReact.abtestSoid:
       case globalThis.gpfReact?.userSoid:
+      case globalThis.gpfReact?.coinAdminSoid:
         console.log(`Index.onSync: ${JSON.stringify(value)}`);
         break;
       default:
@@ -47,6 +49,7 @@ export function Index() {
         SetTest('test1', 'C');
         SetTest('test2', 'test');
         SetTest('test3', 'deleteMe');
+        GetLeaderboardEntries();
         RemoveTest('test3');
       })
       .catch((e) => {

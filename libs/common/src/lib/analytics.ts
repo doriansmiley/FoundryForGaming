@@ -25,6 +25,10 @@ export async function init(
     console.log('calling Unity.Sync userSoid');
     Unity.Sync(globalThis.gpfReact.userSoid);
   }
+  if (globalThis.gpfReact.coinAdminSoid) {
+    console.log('calling Unity.Sync userSoid');
+    Unity.Sync(globalThis.gpfReact.coinAdminSoid);
+  }
   console.log('returning done');
 
   return { done: true };
@@ -56,5 +60,34 @@ export function RemoveTest(testName: string) {
     Unity.Send(globalThis.gpfReact.abtestSoid, 'ABTestsSO+RemoveTest', {
       name: testName,
     });
+  }
+}
+
+export function SetEntry(id, username, score) {
+  if (globalThis.gpfReact.coinAdminSoid) {
+    Unity.Send(globalThis.gpfReact.coinAdminSoid, 'CoinAdminSO+SetEntry', {
+      id,
+      username,
+      score,
+    });
+  }
+}
+
+export function RemoveEntry(id) {
+  if (globalThis.gpfReact.coinAdminSoid) {
+    Unity.Send(globalThis.gpfReact.coinAdminSoid, 'CoinAdminSO+RemoveEntry', {
+      id,
+    });
+  }
+}
+
+export async function GetLeaderboardEntries() {
+  if (globalThis.gpfReact.coinAdminSoid) {
+    console.log(`Unity.Send getting leaderboard`);
+    Unity.Send(
+      globalThis.gpfReact.coinAdminSoid,
+      'CoinLeaderboardSO+GetEntries',
+      {}
+    );
   }
 }

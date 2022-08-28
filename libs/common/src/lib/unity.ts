@@ -13,6 +13,7 @@ export type gpfReact = {
   userId: string | undefined;
   appId: string | undefined;
   userSoid: string | undefined;
+  coinAdminSoid: string | undefined;
   abtestSoid: string | undefined;
   onSOSync: ((json: string) => void) | undefined;
   soListener: ((json: JSONObject) => void) | undefined;
@@ -48,6 +49,7 @@ export async function Load(
     globalThis.gpfReact = {
       userSoid: undefined,
       abtestSoid: undefined,
+      coinAdminSoid: undefined,
       userId: undefined,
       appId: undefined,
       onSOSync: undefined,
@@ -61,6 +63,7 @@ export async function Load(
     globalThis.gpfReact.appId = appId;
     globalThis.gpfReact.userSoid = 'analytics/' + userId;
     globalThis.gpfReact.abtestSoid = 'ab_tests/' + appId;
+    globalThis.gpfReact.coinAdminSoid = 'coin_admin/' + userId;
 
     // TODO refactor to call soListener, remove globalThis.gpfReact?.soListener?
     globalThis.gpfReact.onSOSync = (soJson) => {
