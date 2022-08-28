@@ -12,21 +12,22 @@ namespace REST
   [TestFixture]
   sealed class ExperimentTest : ServerObjectTest
   {
-    public SOID<ExperimentSO> RESTSOID = Registry.GetId<ExperimentSO>();
-
     public override async Task Run()
     {
       if (RestDisabled)
         Assert.Inconclusive("This test is only intended to run when REST is enabled");
 
-      var syncer = CreateSyncer("default");
-      ExperimentSO restSO = await syncer.Sync(RESTSOID);
+      var experimentSoid = Registry.GetId<ExperimentSO>();
+      var restSoid = Registry.GetId<ExperimentRestSO>(experimentSoid.Suffix);
 
-      Debug.Log("Binded to: " + RESTSOID);
+      var syncer = CreateSyncer("default");
+      ExperimentSO restSO = await syncer.Sync(experimentSoid);
+
+      LogInfo("Binded to: " + experimentSoid);
 
       var headers = new Dictionary<string, List<string>>
           {
-              {"SOID", new List<string> { RESTSOID } }
+              {"SOID", new List<string> { restSoid } }
           };
 
       var badRequest1 = new RESTRequest
@@ -38,7 +39,7 @@ namespace REST
       // BAD Path-------------------------------------------------
       var badResponse1 = await SendREST(badRequest1);
 
-      Debug.Log("response: " + badResponse1.Body + " Status: " + badResponse1.httpStatusCode);
+      LogInfo("response: " + badResponse1.Body + " Status: " + badResponse1.httpStatusCode);
 
       Assert.AreEqual(400, (int)badResponse1.httpStatusCode);
       Assert.AreEqual("bad path", badResponse1.Body);
@@ -46,7 +47,7 @@ namespace REST
       // BAD Body-------------------------------------------------
       var badResponse2 = await SendREST(badRequest1, "set");
 
-      Debug.Log("response: " + badResponse2.Body + " Status: " + badResponse2.httpStatusCode);
+      LogInfo("response: " + badResponse2.Body + " Status: " + badResponse2.httpStatusCode);
 
       Assert.AreEqual(400, (int)badResponse2.httpStatusCode);
       Assert.AreEqual("bad body", badResponse2.Body);
@@ -55,6 +56,7 @@ namespace REST
       {
         Headers = headers,
         Method = "POST",
+        Body = " ",
       };
       var goodResponse = await SendREST(goodRequest, "/reset");
 
@@ -62,7 +64,7 @@ namespace REST
 
       Assert.AreEqual("experiments reset", goodResponse.Body);
 
-      Debug.Log("response: " + goodResponse.Body + " Status: " + goodResponse.httpStatusCode);
+      LogInfo("response: " + goodResponse.Body + " Status: " + goodResponse.httpStatusCode);
 
       // Good Payload should set-------------------------------------------------
       goodRequest.Body = "foo=bar&bar=foo";

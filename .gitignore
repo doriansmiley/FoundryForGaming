@@ -1,6 +1,5 @@
 # dependencies
 **/node_modules
-**/static
 
 # WASM libs
 apps/planets/public/unity

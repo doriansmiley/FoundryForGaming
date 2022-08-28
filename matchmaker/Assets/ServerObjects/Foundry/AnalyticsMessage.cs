@@ -5,21 +5,10 @@ namespace ServerObjects
 {
     public abstract class AnalyticsMessage : ServerObjectMessage, ITimeStampReceiver
     {
-        public string DeviceId =
-#if UNITY_2017_1_OR_NEWER
-            UnityEngine.SystemInfo.deviceUniqueIdentifier
-#else
-            ""
-#endif
-            ;
+        // TODO: wrap these in a subclass so they don't clutter people's MessageTypes
+        public string DeviceId = GetDeviceId();
 
-        public string Platform =
-#if UNITY_2017_1_OR_NEWER
-            UnityEngine.SystemInfo.operatingSystem
-#else
-            ""
-#endif
-            ;
+        public string Platform = GetPlatform();
 
         public string Element = GetElement();
 
@@ -27,7 +16,33 @@ namespace ServerObjects
 
         public string Interaction = GetInteraction();
 
+        public string Language = GetDeviceLanguage();
+
+        public string DeviceName = GetDeviceName();
+
+        public string Resolution = GetDeviceResolution();
+
+        public string Screen = "";
+
         public DateTime timestamp { get; set; }
+
+        static string GetDeviceId()
+        {
+#if UNITY_2017_1_OR_NEWER
+            return UnityEngine.SystemInfo.deviceUniqueIdentifier;
+#else
+            return "";
+#endif
+        }
+
+        static string GetPlatform()
+        {
+#if UNITY_2017_1_OR_NEWER
+            return UnityEngine.SystemInfo.operatingSystem;
+#else
+            return "";
+#endif
+        }
 
         static string GetElement()
         {
@@ -74,6 +89,33 @@ namespace ServerObjects
             {
                 return "automation";
             }
+#else
+            return "";
+#endif
+        }
+
+        static string GetDeviceLanguage()
+        {
+#if UNITY_2017_1_OR_NEWER
+            return UnityEngine.Application.systemLanguage.ToString();
+#else
+            return "";
+#endif
+        }
+
+        static string GetDeviceName()
+        {
+#if UNITY_2017_1_OR_NEWER
+            return UnityEngine.SystemInfo.deviceModel;
+#else
+            return "";
+#endif
+        }
+
+        static string GetDeviceResolution()
+        {
+#if UNITY_2017_1_OR_NEWER
+            return UnityEngine.Screen.currentResolution.ToString();
 #else
             return "";
 #endif
