@@ -9,13 +9,38 @@ import {
   GetLeaderboardEntries,
   SetEntry,
   SetTest,
+  RemoveEntry,
   useInjection,
 } from '@foundry-for-gaming/common';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export function Index() {
   const [scores, setScores] = useState([]);
   const [topScores, setTopScores] = useState([]);
+  const [selectedScore, setSelectedScore] = useState<
+    { key: string; username: string; score: number } | undefined
+  >();
+  const deleteScore = useCallback((id) => RemoveEntry(id), []);
+  const onChange = useCallback(
+    (event) => {
+      if (event.target.value !== selectedScore.score) {
+        console.log(`calling SetEntry: ${selectedScore.key}`);
+        SetEntry(selectedScore.key, selectedScore.username, event.target.value);
+      }
+      console.log('setSelectedScore');
+      setSelectedScore({
+        key: selectedScore.key,
+        username: selectedScore.username,
+        score: event.target.value,
+      });
+    },
+    [selectedScore]
+  );
+
+  if (selectedScore) {
+    // console.log('calling SetEntry');
+    //SetEntry(selectedScore.key, selectedScore.username, selectedScore.score);
+  }
 
   function onSync(value: JSONObject) {
     // this global dync function requires introspection if the value to determine
@@ -99,7 +124,20 @@ export function Index() {
       <ol>
         {scores.map((score) => (
           <li key={score.key}>
-            {score.username} - {score.score}
+            {score.username} -{' '}
+            {selectedScore?.key === score.key && (
+              <input
+                type="number"
+                value={selectedScore.score}
+                onChange={(event) => onChange(event)}
+              />
+            )}
+            {selectedScore?.key !== score.key && (
+              <button onClick={(e) => setSelectedScore(score)}>
+                {score.score}
+              </button>
+            )}
+            - <button onClick={(e) => deleteScore(score.key)}>delete</button>
           </li>
         ))}
       </ol>

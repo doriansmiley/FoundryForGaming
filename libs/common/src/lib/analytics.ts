@@ -67,7 +67,7 @@ export function SetTest(testName: string, testValue: string) {
 }
 
 export function SetTopScores(
-  scores: Array<{ key: string; username: string; score: number }>
+  scores: Array<{ username: string; score: number }>
 ) {
   if (globalThis.gpfReact.abtestSoid) {
     console.log(`Unity.Send setting top scores.`);
