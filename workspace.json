@@ -2,15 +2,8 @@
   "version": 2,
   "projects": {
     "common": "libs/common",
-    "e2e-testing-providers": "libs/e2e-testing-providers",
     "hello-world-modules-moster-module": "libs/hello-world/modules/moster-module",
-    "hello-world-modules-planets-module": "libs/hello-world/modules/planets-module",
-    "hello-world-modules-planets-module-e2e": "apps/hello-world-modules-planets-module-e2e",
     "leader-board": "apps/leader-board",
-    "leader-board-e2e": "apps/leader-board-e2e",
-    "native-es-modules": "apps/native-es-modules",
-    "native-es-modules-e2e": "apps/native-es-modules-e2e",
-    "planets": "apps/planets",
-    "planets-e2e": "apps/planets-e2e"
+    "native-es-modules": "apps/native-es-modules"
   }
 }

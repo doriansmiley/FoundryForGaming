@@ -18,9 +18,6 @@
     "paths": {
       "@foundry-for-gaming/common": ["libs/common/src/index.ts"],
       "@foundry-for-gaming/common-no-react": ["libs/common/src/no-react.ts"],
-      "@foundry-for-gaming/e2e-testing-providers": [
-        "libs/e2e-testing-providers/src/index.ts"
-      ],
       "@foundry-for-gaming/hello-world/modules/moster-module": [
         "libs/hello-world/modules/moster-module/src/index.ts"
       ],
