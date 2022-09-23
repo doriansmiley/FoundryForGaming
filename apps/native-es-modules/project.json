@@ -1,0 +1,70 @@
+{
+  "projectType": "application",
+  "root": "apps/native-es-modules",
+  "sourceRoot": "apps/native-es-modules/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/native-es-modules",
+        "compiler": "babel",
+        "index": "apps/native-es-modules/src/index.html",
+        "baseHref": "/",
+        "main": "apps/native-es-modules/src/main.ts",
+        "polyfills": "apps/native-es-modules/src/polyfills.ts",
+        "tsConfig": "apps/native-es-modules/tsconfig.app.json",
+        "assets": [
+          "apps/native-es-modules/src/favicon.ico",
+          "apps/native-es-modules/src/assets"
+        ],
+        "styles": ["apps/native-es-modules/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/native-es-modules/src/environments/environment.ts",
+              "with": "apps/native-es-modules/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "native-es-modules:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "native-es-modules:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/native-es-modules/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/native-es-modules"],
+      "options": {
+        "jestConfig": "apps/native-es-modules/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

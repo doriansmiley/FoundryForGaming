@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>NativeEsModules</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <foundry-for-gaming-root></foundry-for-gaming-root>
+    <script type="module">
+      // Lotus is also importable as es modules!
+      // in this example we import the Events object and add an event listener
+      import {Events} from "https://unpkg.com/lotusjs-components@3.1.2/esm/lib/view/functional/AbstractComponent.js";
+      window.onload = async () => {
+        const button = document.getElementById('inline-button');
+        const responder = {
+          onEvent: (event) => {
+            console.log('this is an example of event mediation and delegation!');
+          }
+        };
+        button.component.addEventListener(Events.CLICK, responder, 'onEvent');
+      }
+    </script>
+  </body>
+</html>

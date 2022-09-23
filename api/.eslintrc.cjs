@@ -4,7 +4,8 @@ module.exports = {
     'es2021': true,
   },
   'extends': [
-    'google',
+    'plugin:@nrwl/nx/react-typescript',
+    '../.eslintrc.json'
   ],
   'parser': '@typescript-eslint/parser',
   'parserOptions': {

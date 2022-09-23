@@ -4,10 +4,12 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
+    "start-native": "nx serve native-es-modules --port 3200",
     "build": "nx build",
     "test": "nx test",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "send-test-events": "node --experimental-fetch api/tools/index post-events 100"
   },
   "private": true,
   "devDependencies": {
@@ -79,12 +81,18 @@
     "webpack": "^5.72.0"
   },
   "dependencies": {
+    "@msgpack/msgpack": "^2.7.2",
     "@nrwl/next": "14.0.5",
+    "@types/ramda": "^0.28.14",
     "brainly-style-guide": "^214.0.0-beta.2",
+    "commander": "^9.3.0",
     "core-js": "^3.6.5",
+    "flatbuffers": "^2.0.6",
     "inversify": "^6.0.1",
+    "lotusjs-components": "^3.1.2",
     "next": "12.1.5",
     "ramda": "^0.28.0",
+    "random": "^3.0.6",
     "react": "^18.1.0",
     "react-dom": "18.0.0",
     "react-query": "^3.38.1",
