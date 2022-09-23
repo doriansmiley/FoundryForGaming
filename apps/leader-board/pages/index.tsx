@@ -94,14 +94,17 @@ export function Index() {
           (
             result as Array<{ key: string; username: string; score: number }>
           ).sort((first, second) => second.score - first.score);
+          setTopScores(
+            result as Array<{ key: string; username: string; score: number }>
+          );
           setScores(
             result as Array<{ key: string; username: string; score: number }>
           );
           // TODO set state
         });
-        SetEntry(userId, 'CodeStrap', 30);
-        SetEntry(userId2, 'iMANTheFlipper', 20);
-        SetEntry(userId3, 'DanTheManLevitan', 40);
+        // SetEntry(userId, 'CodeStrap', 30);
+        // SetEntry(userId2, 'iMANTheFlipper', 20);
+        // SetEntry(userId3, 'DanTheManLevitan', 40);
         RemoveTest('test3');
       })
       .catch((e) => {
