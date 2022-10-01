@@ -5,5 +5,6 @@
     "hello-world-modules-moster-module": "libs/hello-world/modules/moster-module",
     "leader-board": "apps/leader-board",
     "native-es-modules": "apps/native-es-modules"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

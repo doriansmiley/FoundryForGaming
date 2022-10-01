@@ -1,5 +1,5 @@
 {
-  "root": "libs/hello-world/modules/moster-module",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/hello-world/modules/moster-module/src",
   "projectType": "library",
   "targets": {

@@ -26,3 +26,6 @@ tools/tsconfig.tools.json
 dist
 
 flatbuffers
+
+# Next.js
+.next

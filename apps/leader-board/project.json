@@ -1,5 +1,5 @@
 {
-  "root": "apps/leader-board",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/leader-board",
   "projectType": "application",
   "targets": {
@@ -12,7 +12,9 @@
         "outputPath": "dist/apps/leader-board"
       },
       "configurations": {
-        "development": {},
+        "development": {
+          "outputPath": "apps/leader-board"
+        },
         "production": {}
       }
     },
